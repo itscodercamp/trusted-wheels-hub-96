@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 214.3 77.8% 59.8%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 214.3 77.8% 59.8%;
+    --radius: 0.75rem;
+    --cars24-green: 142 76% 36%;
+    --cars24-dark: 220 13% 18%;
+    --cars24-gray: 210 11% 96%;
+  }
+
+  .dark {
+    --background: 220 13% 18%;
+    --foreground: 210 40% 98%;
+    --card: 220 13% 18%;
+    --card-foreground: 210 40% 98%;
+    --popover: 220 13% 18%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 214.3 77.8% 59.8%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 217 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217 32.6% 17.5%;
+    --input: 217 32.6% 17.5%;
+    --ring: 214.3 77.8% 59.8%;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .trust-gradient {
+    background: linear-gradient(135deg, hsl(199 89% 48%) 0%, hsl(217 91% 60%) 100%);
+  }
+
+  .automotive-gradient {
+    background: linear-gradient(135deg, hsl(215 20% 65%) 0%, hsl(215 25% 27%) 100%);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary hover:bg-primary/90 text-primary-foreground font-medium px-4 py-2 sm:px-6 sm:py-3 rounded-lg transition-all duration-200 hover:scale-105 shadow-lg hover:shadow-xl text-sm sm:text-base;
+  }
+  
+  .btn-secondary {
+    @apply bg-background hover:bg-muted text-primary dark:text-primary font-medium px-4 py-2 sm:px-6 sm:py-3 rounded-lg border-2 border-primary transition-all duration-200 hover:scale-105 text-sm sm:text-base;
+  }
+
+  .section-padding {
+    @apply px-4 py-8 sm:py-12 lg:py-16 lg:px-8;
+  }
+
+  .trust-card {
+    @apply bg-card rounded-xl shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-border;
+  }
+
+  .mobile-menu-open {
+    @apply overflow-hidden;
+  }
+
+  .cars24-card {
+    @apply bg-white dark:bg-card rounded-2xl shadow-sm border border-gray-100 dark:border-border;
+  }
+
+  .cars24-service-icon {
+    @apply w-12 h-12 rounded-xl flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5 text-primary;
+  }
+
+  .android-bottom-sheet {
+    @apply fixed bottom-0 left-0 right-0 bg-white dark:bg-card rounded-t-3xl shadow-2xl border-t border-gray-200 dark:border-border p-6 transform transition-transform duration-300 ease-out;
+  }
+
+  .floating-action-button {
+    @apply fixed bottom-6 right-6 w-14 h-14 bg-primary text-primary-foreground rounded-full shadow-lg hover:shadow-xl transition-all duration-200 flex items-center justify-center z-50;
+  }
+}
+
+@media (max-width: 640px) {
+  .section-padding {
+    @apply px-4 py-8;
+  }
+}
