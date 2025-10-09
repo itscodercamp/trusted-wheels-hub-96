@@ -152,18 +152,11 @@ const SellCar = () => {
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
                       <Label htmlFor="make">Make</Label>
-                      <Select onValueChange={(value) => handleInputChange('make', value)} value={formData.make}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Make" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="maruti">Maruti Suzuki</SelectItem>
-                          <SelectItem value="hyundai">Hyundai</SelectItem>
-                          <SelectItem value="tata">Tata</SelectItem>
-                          <SelectItem value="honda">Honda</SelectItem>
-                          <SelectItem value="mahindra">Mahindra</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <Input 
+                        placeholder="e.g., Maruti Suzuki, Honda, Hyundai"
+                        value={formData.make}
+                        onChange={(e) => handleInputChange('make', e.target.value)}
+                      />
                     </div>
 
                     <div>
@@ -177,16 +170,11 @@ const SellCar = () => {
 
                     <div>
                       <Label htmlFor="year">Year</Label>
-                      <Select onValueChange={(value) => handleInputChange('year', value)} value={formData.year}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Year" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {Array.from({ length: 25 }, (_, i) => 2024 - i).map(year => (
-                            <SelectItem key={year} value={year.toString()}>{year}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
+                      <Input 
+                        placeholder="e.g., 2020"
+                        value={formData.year}
+                        onChange={(e) => handleInputChange('year', e.target.value)}
+                      />
                     </div>
 
                     <div>
@@ -200,32 +188,20 @@ const SellCar = () => {
 
                     <div>
                       <Label htmlFor="fuelType">Fuel Type</Label>
-                      <Select onValueChange={(value) => handleInputChange('fuelType', value)} value={formData.fuelType}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Fuel Type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="petrol">Petrol</SelectItem>
-                          <SelectItem value="diesel">Diesel</SelectItem>
-                          <SelectItem value="cng">CNG</SelectItem>
-                          <SelectItem value="electric">Electric</SelectItem>
-                          <SelectItem value="hybrid">Hybrid</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <Input 
+                        placeholder="e.g., Petrol, Diesel, CNG"
+                        value={formData.fuelType}
+                        onChange={(e) => handleInputChange('fuelType', e.target.value)}
+                      />
                     </div>
 
                     <div>
                       <Label htmlFor="transmission">Transmission</Label>
-                      <Select onValueChange={(value) => handleInputChange('transmission', value)} value={formData.transmission}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Transmission" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="manual">Manual</SelectItem>
-                          <SelectItem value="automatic">Automatic</SelectItem>
-                          <SelectItem value="cvt">CVT</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <Input 
+                        placeholder="e.g., Manual, Automatic"
+                        value={formData.transmission}
+                        onChange={(e) => handleInputChange('transmission', e.target.value)}
+                      />
                     </div>
 
                     <div>
@@ -239,33 +215,20 @@ const SellCar = () => {
 
                     <div>
                       <Label htmlFor="owners">Number of Owners</Label>
-                      <Select onValueChange={(value) => handleInputChange('owners', value)} value={formData.owners}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Owners" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="1st Owner">1st Owner</SelectItem>
-                          <SelectItem value="2nd Owner">2nd Owner</SelectItem>
-                          <SelectItem value="3rd Owner">3rd Owner</SelectItem>
-                          <SelectItem value="4+ Owner">4+ Owner</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <Input 
+                        placeholder="e.g., 1st Owner, 2nd Owner"
+                        value={formData.owners}
+                        onChange={(e) => handleInputChange('owners', e.target.value)}
+                      />
                     </div>
 
                     <div>
                       <Label htmlFor="registrationState">Registration State</Label>
-                      <Select onValueChange={(value) => handleInputChange('registrationState', value)} value={formData.registrationState}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select State" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="MH">Maharashtra</SelectItem>
-                          <SelectItem value="DL">Delhi</SelectItem>
-                          <SelectItem value="KA">Karnataka</SelectItem>
-                          <SelectItem value="GJ">Gujarat</SelectItem>
-                          <SelectItem value="TN">Tamil Nadu</SelectItem>
-                        </SelectContent>
-                      </Select>
+                      <Input 
+                        placeholder="e.g., Maharashtra, Delhi"
+                        value={formData.registrationState}
+                        onChange={(e) => handleInputChange('registrationState', e.target.value)}
+                      />
                     </div>
                   </div>
                 </div>
