@@ -80,126 +80,65 @@ const MarketplaceVehicles = () => {
             <Button onClick={() => window.location.reload()}>Try Again</Button>
           </div>
         ) : (
-          <>
-            {/* Desktop Grid */}
-            <div className="hidden md:grid grid-cols-6 gap-6 mb-8">
-              {vehicles.map((vehicle) => (
-                <Card 
-                  key={vehicle.id} 
-                  className="cars24-card overflow-hidden cursor-pointer group hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                  onClick={handleVehicleClick}
-                >
-                  <div className="relative">
-                    <img 
-                      src={`https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev${vehicle.imageUrl}`} 
-                      alt={`${vehicle.make} ${vehicle.model}`}
-                      className="w-full h-40 object-cover group-hover:scale-110 transition-transform duration-300"
-                      onError={(e) => {
-                        e.currentTarget.src = '/placeholder.svg';
-                      }}
-                    />
-                    <div className="absolute top-2 left-2">
-                      <Badge className="bg-green-500 text-white text-xs">
-                        <Star className="h-3 w-3 mr-1" />
-                        Verified
-                      </Badge>
-                    </div>
-                    <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-foreground">
-                      {formatPrice(vehicle.price)}
-                    </div>
+          /* Responsive Grid: 2 cols mobile, 3 cols tablet, 6 cols desktop */
+          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 md:gap-6 mb-8">
+            {vehicles.map((vehicle) => (
+              <Card 
+                key={vehicle.id} 
+                className="cars24-card overflow-hidden cursor-pointer group hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                onClick={handleVehicleClick}
+              >
+                <div className="relative">
+                  <img 
+                    src={`https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev${vehicle.imageUrl}`} 
+                    alt={`${vehicle.make} ${vehicle.model}`}
+                    className="w-full h-32 md:h-40 object-cover group-hover:scale-110 transition-transform duration-300"
+                    onError={(e) => {
+                      e.currentTarget.src = '/placeholder.svg';
+                    }}
+                  />
+                  <div className="absolute top-2 left-2">
+                    <Badge className="bg-green-500 text-white text-xs">
+                      <Star className="h-3 w-3 mr-1" />
+                      Verified
+                    </Badge>
                   </div>
+                  <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-foreground">
+                    {formatPrice(vehicle.price)}
+                  </div>
+                </div>
+                
+                <CardContent className="p-3 md:p-4">
+                  <h3 className="font-bold text-foreground mb-1 text-sm">
+                    {vehicle.make} {vehicle.model}
+                  </h3>
+                  <p className="text-xs text-muted-foreground mb-2 line-clamp-1">{vehicle.variant}</p>
                   
-                  <CardContent className="p-4">
-                    <h3 className="font-bold text-foreground mb-1 text-sm">
-                      {vehicle.make} {vehicle.model}
-                    </h3>
-                    <p className="text-xs text-muted-foreground mb-2">{vehicle.variant}</p>
-                    
-                    <div className="space-y-1 text-xs text-muted-foreground mb-3">
+                  <div className="space-y-1 text-xs text-muted-foreground mb-3">
+                    <div className="flex items-center">
+                      <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
+                      <span className="truncate">{vehicle.rtoState}</span>
+                    </div>
+                    <div className="flex items-center justify-between gap-2">
                       <div className="flex items-center">
-                        <MapPin className="h-3 w-3 mr-1" />
-                        {vehicle.rtoState}
-                      </div>
-                      <div className="flex items-center">
-                        <Calendar className="h-3 w-3 mr-1" />
+                        <Calendar className="h-3 w-3 mr-1 flex-shrink-0" />
                         {formatOdometer(vehicle.odometer)}
                       </div>
                       <div className="flex items-center">
-                        <Fuel className="h-3 w-3 mr-1" />
+                        <Fuel className="h-3 w-3 mr-1 flex-shrink-0" />
                         {vehicle.fuelType}
                       </div>
                     </div>
-                    
-                    <Button size="sm" className="w-full text-xs h-8">
-                      View Details
-                      <ArrowRight className="h-3 w-3 ml-1" />
-                    </Button>
-                  </CardContent>
-                </Card>
-          ))}
-        </div>
-
-            {/* Mobile Grid - 2 in a row with rectangular cards */}
-            <div className="md:hidden grid grid-cols-2 gap-3 mb-8">
-              {vehicles.map((vehicle) => (
-                <Card 
-                  key={vehicle.id} 
-                  className="cars24-card overflow-hidden cursor-pointer group hover:shadow-lg transition-all duration-300"
-                  onClick={handleVehicleClick}
-                >
-                  <div className="relative">
-                    <img 
-                      src={`https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev${vehicle.imageUrl}`} 
-                      alt={`${vehicle.make} ${vehicle.model}`}
-                      className="w-full h-24 object-cover group-hover:scale-105 transition-transform duration-300"
-                      onError={(e) => {
-                        e.currentTarget.src = '/placeholder.svg';
-                      }}
-                    />
-                    <div className="absolute top-1 left-1">
-                      <Badge className="bg-green-500 text-white text-[10px] px-1 py-0">
-                        <Star className="h-2 w-2 mr-0.5" />
-                        Verified
-                      </Badge>
-                    </div>
-                    <div className="absolute top-1 right-1 bg-white/90 backdrop-blur-sm px-1.5 py-0.5 rounded text-[10px] font-medium text-foreground">
-                      {formatPrice(vehicle.price)}
-                    </div>
                   </div>
                   
-                  <CardContent className="p-2">
-                    <h3 className="font-semibold text-foreground text-xs leading-tight mb-1">
-                      {vehicle.make} {vehicle.model}
-                    </h3>
-                    <p className="text-[10px] text-muted-foreground mb-1">{vehicle.variant}</p>
-                    
-                    <div className="space-y-0.5 text-[10px] text-muted-foreground mb-2">
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <MapPin className="h-2 w-2 mr-0.5" />
-                          <span className="truncate">{vehicle.rtoState}</span>
-                        </div>
-                      </div>
-                      <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                          <Calendar className="h-2 w-2 mr-0.5" />
-                          <span>{formatOdometer(vehicle.odometer)}</span>
-                        </div>
-                        <div className="flex items-center">
-                          <Fuel className="h-2 w-2 mr-0.5" />
-                          <span>{vehicle.fuelType}</span>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <Button size="sm" className="w-full text-[10px] h-6 py-0">
-                      View Details
-                    </Button>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </>
+                  <Button size="sm" className="w-full text-xs h-8">
+                    View Details
+                    <ArrowRight className="h-3 w-3 ml-1" />
+                  </Button>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
         )}
 
         <div className="text-center">
