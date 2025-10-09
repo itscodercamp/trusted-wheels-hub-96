@@ -65,13 +65,20 @@ const InspectionAndSellCards = () => {
               <p className="text-muted-foreground mb-6">
                 Get a comprehensive 200+ point inspection by certified experts
               </p>
-              <div className="bg-gray-50 dark:bg-background rounded-xl p-6 mb-6">
+              <div className="bg-gray-50 dark:bg-background rounded-xl p-6 mb-4">
                 <div className="flex items-center justify-between">
                   <span className="text-lg font-medium text-muted-foreground">Starting from</span>
                   <span className="text-4xl font-bold text-primary">₹999</span>
                 </div>
               </div>
-              <Button 
+              
+              <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-3 mb-6">
+                <p className="text-sm text-muted-foreground text-center">
+                  Pay amount <span className="font-bold text-green-600 dark:text-green-400">after inspection</span>
+                </p>
+              </div>
+              
+              <Button
                 size="lg"
                 className="w-full h-14 rounded-xl bg-primary hover:bg-primary/90 text-lg font-semibold"
                 onClick={() => navigate('/book-inspection')}
