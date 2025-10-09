@@ -87,7 +87,13 @@ const BookInspectionCard = () => {
                   </p>
                 </div>
 
-                <Button 
+                <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
+                  <p className="text-xs text-muted-foreground text-center">
+                    Pay amount <span className="font-bold text-green-600 dark:text-green-400">after inspection</span>
+                  </p>
+                </div>
+
+                <Button
                   className="w-full h-12 rounded-xl bg-primary hover:bg-primary/90 text-primary-foreground font-semibold"
                   onClick={() => navigate('/book-inspection')}
                 >
@@ -165,6 +171,12 @@ const BookInspectionCard = () => {
                     </div>
                     <p className="text-muted-foreground">
                       Comprehensive inspection report included
+                    </p>
+                  </div>
+
+                  <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
+                    <p className="text-sm text-muted-foreground text-center">
+                      Pay amount <span className="font-bold text-green-600 dark:text-green-400">after inspection</span>
                     </p>
                   </div>
 

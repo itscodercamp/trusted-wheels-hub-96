@@ -73,7 +73,7 @@ const InspectionServices = () => {
                   {service.description}
                 </p>
                 
-                <div className="space-y-2 mb-6">
+                <div className="space-y-2 mb-4">
                   {service.features.map((feature, featureIndex) => (
                     <div key={featureIndex} className="flex items-center">
                       <CheckCircle className="h-4 w-4 text-primary mr-2 flex-shrink-0" />
@@ -82,7 +82,13 @@ const InspectionServices = () => {
                   ))}
                 </div>
                 
-                <Button 
+                <div className="bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-800 rounded-lg p-3 mb-6">
+                  <p className="text-sm text-muted-foreground text-center">
+                    Pay amount <span className="font-bold text-green-600 dark:text-green-400">after inspection</span>
+                  </p>
+                </div>
+                
+                <Button
                   className="w-full h-12 rounded-xl group-hover:translate-y-[-2px] transition-transform duration-200"
                   onClick={() => navigate('/book-inspection')}
                 >
