@@ -36,7 +36,7 @@ const InspectionAndSellCards = () => {
               <Button 
                 size="lg"
                 className="w-full h-14 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-lg font-semibold shadow-xl transform hover:scale-105 transition-all duration-300"
-                onClick={() => navigate('/sell-car')}
+                onClick={() => navigate('/book-inspection')}
               >
                 <DollarSign className="h-6 w-6 mr-3" />
                 Get Free Inspection
