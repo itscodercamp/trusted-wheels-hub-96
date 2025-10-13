@@ -38,7 +38,7 @@ const SellCar = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('https://apis.trustedvehicles.com/sell-requests', {
+      const response = await fetch('https://apis.trustedvehicles.com/api/sell-requests', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

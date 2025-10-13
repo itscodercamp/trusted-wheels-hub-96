@@ -50,7 +50,7 @@ const BookInspection = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('https://apis.trustedvehicles.com/customerinspection', {
+      const response = await fetch('https://apis.trustedvehicles.com/api/customerinspection', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

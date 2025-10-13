@@ -32,7 +32,7 @@ const Contact = () => {
     
     try {
       // Updated API URL (removed trailing slash as per provided code)
-      const response = await fetch('https://apis.trustedvehicles.com/contact', {
+      const response = await fetch('https://apis.trustedvehicles.com/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

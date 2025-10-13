@@ -24,7 +24,7 @@ const MarketplaceVehicles = () => {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const response = await fetch('https://apis.trustedvehicles.com/marketplace/vehicles');
+        const response = await fetch('https://apis.trustedvehicles.com/api/marketplace/vehicles');
         if (!response.ok) {
           throw new Error('Failed to fetch vehicles');
         }
