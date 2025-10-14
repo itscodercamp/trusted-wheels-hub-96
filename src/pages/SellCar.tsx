@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
+import { Helmet } from 'react-helmet-async';
 
 const SellCar = () => {
   const [formData, setFormData] = useState({
@@ -88,6 +89,19 @@ const SellCar = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Sell Your Car Online - Get Best Price with Free Inspection | Trusted Vehicles</title>
+        <meta 
+          name="description" 
+          content="Sell your car online with Trusted Vehicles. Get instant valuation, free professional inspection, best price guarantee. Quick payment. Sell used cars hassle-free across India."
+        />
+        <meta name="keywords" content="sell car online, sell used car, car valuation, free car inspection, best price car selling, sell my car india, instant car valuation" />
+        <meta property="og:title" content="Sell Your Car - Best Price with Free Inspection" />
+        <meta property="og:description" content="Get instant valuation and sell your car with free professional inspection. Best prices guaranteed." />
+        <meta property="og:url" content="https://trustedvehicles.com/sell-car" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/sell-car" />
+      </Helmet>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 to-primary/5 py-12">
         <div className="max-w-4xl mx-auto px-4 text-center">

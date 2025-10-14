@@ -6,6 +6,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'; // Import Select components
 import { useToast } from '@/hooks/use-toast';
+import { Helmet } from 'react-helmet-async';
 
 const BookInspection = () => {
   const [currentStep, setCurrentStep] = useState(1);
@@ -137,6 +138,19 @@ const BookInspection = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-trust-50 to-blue-100">
+      <Helmet>
+        <title>Book Car Inspection - Free Professional 200-Point Check | Trusted Vehicles</title>
+        <meta 
+          name="description" 
+          content="Book professional car inspection service with Trusted Vehicles. 200-point check by certified experts. Free inspection with car selling. Get instant booking across India."
+        />
+        <meta name="keywords" content="book car inspection, professional car check, vehicle inspection india, 200 point inspection, car inspection service, certified car inspection" />
+        <meta property="og:title" content="Book Car Inspection - Trusted Vehicles" />
+        <meta property="og:description" content="Professional 200-point car inspection by certified experts. Free with car selling." />
+        <meta property="og:url" content="https://trustedvehicles.com/book-inspection" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/book-inspection" />
+      </Helmet>
       <div className="section-padding">
         <div className="max-w-4xl mx-auto">
           {/* Header */}

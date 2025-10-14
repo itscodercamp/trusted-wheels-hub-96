@@ -1,6 +1,7 @@
 
 import { Shield, Users, Car, CheckCircle, ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Helmet } from 'react-helmet-async';
 
 const About = () => {
   const milestones = [
@@ -38,6 +39,19 @@ const About = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>About Us - India's Most Trusted Car Platform | Trusted Vehicles</title>
+        <meta 
+          name="description" 
+          content="Learn about Trusted Vehicles - India's leading car platform revolutionizing the used car market with transparency, professional inspections, and certified dealers since 2018."
+        />
+        <meta name="keywords" content="about trusted vehicles, car platform india, used car transparency, professional car inspection company, car dealership network" />
+        <meta property="og:title" content="About Trusted Vehicles - India's Trusted Car Platform" />
+        <meta property="og:description" content="Revolutionizing India's used car market with transparency and trust since 2018" />
+        <meta property="og:url" content="https://trustedvehicles.com/about" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/about" />
+      </Helmet>
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-trust-50 to-blue-100">
         <div className="max-w-7xl mx-auto">

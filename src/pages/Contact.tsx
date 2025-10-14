@@ -6,6 +6,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
+import { Helmet } from 'react-helmet-async';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -99,6 +100,19 @@ const Contact = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Contact Us - Get in Touch with Trusted Vehicles | 24/7 Support</title>
+        <meta 
+          name="description" 
+          content="Contact Trusted Vehicles for car inspection, buying or selling queries. 24/7 customer support. Call, email or visit us in Gurgaon. Quick response guaranteed."
+        />
+        <meta name="keywords" content="contact trusted vehicles, car inspection support, customer service, contact car dealership, trusted vehicles gurgaon" />
+        <meta property="og:title" content="Contact Trusted Vehicles - 24/7 Support" />
+        <meta property="og:description" content="Get in touch with India's most trusted car platform. We're here to help you." />
+        <meta property="og:url" content="https://trustedvehicles.com/contact" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/contact" />
+      </Helmet>
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-trust-50 to-blue-100">
         <div className="max-w-7xl mx-auto text-center">

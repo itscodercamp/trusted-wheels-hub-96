@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
+import { Helmet } from 'react-helmet-async';
 
 const VehicleHistory = () => {
   const [searchData, setSearchData] = useState({
@@ -70,6 +71,12 @@ const VehicleHistory = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Vehicle History Report - Check Car History Online | Trusted Vehicles</title>
+        <meta name="description" content="Get complete vehicle history report online. Check ownership records, accident details, legal status, theft verification. Instant vehicle verification service." />
+        <meta name="keywords" content="vehicle history report, car history check, vehicle verification, RC verification, car accident history, theft verification" />
+        <link rel="canonical" href="https://trustedvehicles.com/vehicle-history" />
+      </Helmet>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 to-primary/5 py-12">
         <div className="max-w-4xl mx-auto px-4 text-center">

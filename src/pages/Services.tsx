@@ -2,6 +2,7 @@ import { Shield, Car, Users, FileText, MapPin, CheckCircle, ArrowRight, LayoutDa
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom'; // Added useNavigate
+import { Helmet } from 'react-helmet-async';
 
 const Services = () => {
   const navigate = useNavigate(); // Initialize useNavigate
@@ -60,6 +61,19 @@ const Services = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Our Services - Car Inspection, Sales & More | Trusted Vehicles</title>
+        <meta 
+          name="description" 
+          content="Explore Trusted Vehicles services: Professional car inspection, certified car sales, IMS for dealers, regional marketplace, auctions, D2D transfers and legal paperwork assistance."
+        />
+        <meta name="keywords" content="car inspection services, car dealership services, IMS for dealers, car marketplace, vehicle auction, car transfer services" />
+        <meta property="og:title" content="Trusted Vehicles Services - Complete Car Solutions" />
+        <meta property="og:description" content="Comprehensive automotive services for buying, selling and managing vehicles" />
+        <meta property="og:url" content="https://trustedvehicles.com/services" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/services" />
+      </Helmet>
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-trust-50 to-blue-100">
         <div className="max-w-7xl mx-auto text-center">

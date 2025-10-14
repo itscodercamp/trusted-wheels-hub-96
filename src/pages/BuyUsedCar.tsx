@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { Helmet } from 'react-helmet-async';
 
 const BuyUsedCar = () => {
   const [selectedFilters, setSelectedFilters] = useState({
@@ -61,6 +62,19 @@ const BuyUsedCar = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Buy Certified Used Cars - Pre-Inspected & Verified | Trusted Vehicles</title>
+        <meta 
+          name="description" 
+          content="Buy certified used cars with Trusted Vehicles. All cars professionally inspected, verified history, best prices. Wide selection of pre-owned vehicles with warranty across India."
+        />
+        <meta name="keywords" content="buy used car, certified used cars, pre-inspected cars, buy second hand car, verified used cars india, certified pre-owned vehicles" />
+        <meta property="og:title" content="Buy Certified Used Cars - Trusted Vehicles" />
+        <meta property="og:description" content="Pre-inspected and verified used cars with complete transparency and warranty" />
+        <meta property="og:url" content="https://trustedvehicles.com/buy-used-car" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/buy-used-car" />
+      </Helmet>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 to-primary/5 py-12">
         <div className="max-w-7xl mx-auto px-4">

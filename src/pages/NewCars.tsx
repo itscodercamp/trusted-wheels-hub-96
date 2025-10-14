@@ -5,6 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
+import { Helmet } from 'react-helmet-async';
 
 const NewCars = () => {
   const [filters, setFilters] = useState({
@@ -79,6 +80,13 @@ const NewCars = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>New Cars 2024 - Latest Models & Best Prices | Trusted Vehicles</title>
+        <meta name="description" content="Explore latest new cars 2024 with best prices. Compare features, mileage, specs. Get on-road prices, test drive booking. Top brands available." />
+        <meta name="keywords" content="new cars 2024, latest cars india, new car models, buy new car, new car prices, car launches 2024" />
+        <meta property="og:title" content="New Cars 2024 - Trusted Vehicles" />
+        <link rel="canonical" href="https://trustedvehicles.com/new-cars" />
+      </Helmet>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 to-primary/5 py-12">
         <div className="max-w-7xl mx-auto px-4">

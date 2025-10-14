@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { Helmet } from 'react-helmet-async';
 
 const Gallery = () => {
   const [searchTerm, setSearchTerm] = useState('');
@@ -103,6 +104,19 @@ const Gallery = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Car Gallery - Browse Pre-Inspected Vehicles | Trusted Vehicles</title>
+        <meta 
+          name="description" 
+          content="Browse our gallery of pre-inspected, certified vehicles. Every car has undergone comprehensive 200-point inspection. Find your perfect car with complete transparency."
+        />
+        <meta name="keywords" content="car gallery, pre-inspected cars, certified vehicles, browse cars india, car showroom online, verified cars" />
+        <meta property="og:title" content="Car Gallery - Trusted Vehicles" />
+        <meta property="og:description" content="Browse pre-inspected, certified vehicles with complete transparency" />
+        <meta property="og:url" content="https://trustedvehicles.com/gallery" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/gallery" />
+      </Helmet>
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-trust-50 to-blue-100">
         <div className="max-w-7xl mx-auto text-center">

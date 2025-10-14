@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Slider } from '@/components/ui/slider';
+import { Helmet } from 'react-helmet-async';
 
 const CarLoan = () => {
   const [loanData, setLoanData] = useState({
@@ -57,6 +58,19 @@ const CarLoan = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Car Loan at Best Rates - EMI Calculator | Trusted Vehicles</title>
+        <meta 
+          name="description" 
+          content="Get instant car loan approval with competitive interest rates starting 8.5%. Calculate EMI, flexible tenure, quick disbursal. Apply online for car loan today."
+        />
+        <meta name="keywords" content="car loan, car loan emi calculator, car finance india, best car loan rates, instant car loan approval, car loan online" />
+        <meta property="og:title" content="Car Loan at Best Rates - Trusted Vehicles" />
+        <meta property="og:description" content="Instant car loan approval with competitive rates and flexible EMI options" />
+        <meta property="og:url" content="https://trustedvehicles.com/car-loan" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/car-loan" />
+      </Helmet>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 to-primary/5 py-12">
         <div className="max-w-4xl mx-auto px-4 text-center">

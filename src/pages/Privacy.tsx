@@ -1,6 +1,7 @@
 
 import { Shield, Eye, Lock, Database, UserCheck, AlertTriangle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Helmet } from 'react-helmet-async';
 
 const Privacy = () => {
   const dataTypes = [
@@ -138,6 +139,11 @@ const Privacy = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Privacy Policy - Trusted Vehicles</title>
+        <meta name="description" content="Trusted Vehicles privacy policy. Learn how we collect, use and protect your personal data. Your privacy is our priority." />
+        <link rel="canonical" href="https://trustedvehicles.com/privacy" />
+      </Helmet>
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-trust-50 to-blue-100">
         <div className="max-w-7xl mx-auto text-center">

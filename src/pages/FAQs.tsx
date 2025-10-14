@@ -4,6 +4,7 @@ import { ChevronDown, ChevronUp, HelpCircle, Search } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { Helmet } from 'react-helmet-async';
 
 const FAQs = () => {
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
@@ -124,6 +125,19 @@ const FAQs = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>FAQs - Frequently Asked Questions | Trusted Vehicles</title>
+        <meta 
+          name="description" 
+          content="Find answers to common questions about car inspection, buying/selling cars, pricing, documentation and services at Trusted Vehicles. Get instant answers to your queries."
+        />
+        <meta name="keywords" content="car inspection FAQ, car buying questions, trusted vehicles help, car inspection questions, car selling FAQ" />
+        <meta property="og:title" content="FAQs - Trusted Vehicles" />
+        <meta property="og:description" content="Answers to frequently asked questions about car inspection and services" />
+        <meta property="og:url" content="https://trustedvehicles.com/faqs" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/faqs" />
+      </Helmet>
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-trust-50 to-blue-100">
         <div className="max-w-7xl mx-auto text-center">

@@ -1,6 +1,7 @@
 
 import { FileText, AlertCircle, Shield, Users } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Helmet } from 'react-helmet-async';
 
 const Terms = () => {
   const sections = [
@@ -117,6 +118,11 @@ const Terms = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Terms & Conditions - Trusted Vehicles</title>
+        <meta name="description" content="Read Trusted Vehicles terms and conditions. Understand our service agreement, user responsibilities, inspection terms and marketplace policies." />
+        <link rel="canonical" href="https://trustedvehicles.com/terms" />
+      </Helmet>
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-trust-50 to-blue-100">
         <div className="max-w-7xl mx-auto text-center">

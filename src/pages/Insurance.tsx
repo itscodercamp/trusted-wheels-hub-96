@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
+import { Helmet } from 'react-helmet-async';
 
 const Insurance = () => {
   const [insuranceData, setInsuranceData] = useState({
@@ -67,6 +68,19 @@ const Insurance = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Car Insurance - Compare & Buy Best Plans Online | Trusted Vehicles</title>
+        <meta 
+          name="description" 
+          content="Compare and buy car insurance online from top insurers. Get instant quotes, best prices, comprehensive coverage. Zero depreciation, cashless claims available."
+        />
+        <meta name="keywords" content="car insurance, buy car insurance online, car insurance india, comprehensive car insurance, zero depreciation, car insurance quotes" />
+        <meta property="og:title" content="Car Insurance - Best Prices | Trusted Vehicles" />
+        <meta property="og:description" content="Compare and buy car insurance online with instant policy issuance" />
+        <meta property="og:url" content="https://trustedvehicles.com/insurance" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/insurance" />
+      </Helmet>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 to-primary/5 py-12">
         <div className="max-w-4xl mx-auto px-4 text-center">
