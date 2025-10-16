@@ -67,7 +67,8 @@ const App = () => (
                 <Route path="/insurance" element={<Insurance />} />
                 <Route path="/vehicle-history" element={<VehicleHistory />} />
                 <Route path="/marketplace-landing" element={<MarketplaceLanding />} />
-                <Route path="/cookies" element={<CookiePolicy />} /> {/* New route */}
+                <Route path="/marketplace" element={<MarketplaceLanding />} />
+                <Route path="/cookie-policy" element={<CookiePolicy />} /> {/* Updated route */}
                 <Route path="/disclaimer" element={<Disclaimer />} /> {/* New route */}
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
                 <Route path="*" element={<NotFound />} />

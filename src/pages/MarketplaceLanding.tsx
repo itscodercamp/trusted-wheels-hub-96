@@ -1,5 +1,6 @@
 import React from 'react';
 import { Car, ArrowRight, Shield, Users, DollarSign } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -26,6 +27,19 @@ const MarketplaceLanding = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-trust-50 to-blue-100 dark:from-automotive-900 dark:to-automotive-700">
+      <Helmet>
+        <title>Car Marketplace - Buy Verified Used Cars India | Trusted Vehicles</title>
+        <meta 
+          name="description" 
+          content="Browse India's most trusted car marketplace. Buy and sell pre-inspected used cars with verified listings, genuine buyers and sellers, and fair pricing. Thousands of quality vehicles."
+        />
+        <meta name="keywords" content="car marketplace india, buy used cars online, verified used cars, pre-inspected vehicles, trusted car marketplace" />
+        <meta property="og:title" content="Car Marketplace - Buy Verified Used Cars" />
+        <meta property="og:description" content="India's trusted marketplace for buying and selling verified used cars" />
+        <meta property="og:url" content="https://trustedvehicles.com/marketplace" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/marketplace" />
+      </Helmet>
       <section className="section-padding text-center">
         <div className="max-w-4xl mx-auto">
           <div className="inline-flex p-4 bg-trust-500 rounded-full mb-6">

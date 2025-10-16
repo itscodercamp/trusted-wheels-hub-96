@@ -32,6 +32,19 @@ const Index = () => {
         <meta name="twitter:title" content="Trusted Vehicles - Buy & Sell Cars" />
         <meta name="twitter:description" content="India's trusted car platform with free inspection services" />
         <link rel="canonical" href="https://trustedvehicles.com" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Trusted Vehicles",
+            "url": "https://trustedvehicles.com",
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": "https://trustedvehicles.com/buy-used-car?search={search_term_string}",
+              "query-input": "required name=search_term_string"
+            }
+          })}
+        </script>
       </Helmet>
       <HeroSection />
       <InspectionAndSellCards /> {/* Added the new component here */}

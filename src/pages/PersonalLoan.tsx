@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Calculator, User, Clock, Shield, Check, CreditCard, Phone } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -67,6 +68,19 @@ const PersonalLoan = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>Personal Loan at Lowest Rates - Instant Approval | Trusted Vehicles</title>
+        <meta 
+          name="description" 
+          content="Get instant personal loan up to ₹50 lakhs at lowest interest rates. Quick approval in 5 minutes, minimal documentation. Apply online for personal loan in India."
+        />
+        <meta name="keywords" content="personal loan, instant loan approval, low interest personal loan, quick loan india, online personal loan" />
+        <meta property="og:title" content="Personal Loan at Lowest Rates - Instant Approval" />
+        <meta property="og:description" content="Get instant personal loan up to ₹50 lakhs with lowest interest rates and quick approval" />
+        <meta property="og:url" content="https://trustedvehicles.com/personal-loan" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/personal-loan" />
+      </Helmet>
       {/* Hero Section */}
       <section className="bg-gradient-to-br from-primary/10 to-primary/5 py-12">
         <div className="max-w-4xl mx-auto px-4 text-center">

@@ -1,5 +1,6 @@
 import { Cookie, Info, Shield } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Helmet } from 'react-helmet-async';
 
 const CookiePolicy = () => {
   const sections = [
@@ -48,6 +49,19 @@ const CookiePolicy = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Cookie Policy - How We Use Cookies | Trusted Vehicles</title>
+        <meta 
+          name="description" 
+          content="Learn about how Trusted Vehicles uses cookies to improve your experience. Cookie policy, types of cookies, and how to manage your preferences."
+        />
+        <meta name="keywords" content="cookie policy, cookies, privacy, data tracking, website cookies, manage cookies" />
+        <meta property="og:title" content="Cookie Policy - How We Use Cookies" />
+        <meta property="og:description" content="Information about how Trusted Vehicles uses cookies and how to manage your preferences" />
+        <meta property="og:url" content="https://trustedvehicles.com/cookie-policy" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/cookie-policy" />
+      </Helmet>
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-trust-50 to-blue-100">
         <div className="max-w-7xl mx-auto text-center">

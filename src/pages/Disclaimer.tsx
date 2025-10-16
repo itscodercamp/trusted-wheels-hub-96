@@ -1,5 +1,6 @@
 import { AlertTriangle, Info, Shield } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Helmet } from 'react-helmet-async';
 
 const Disclaimer = () => {
   const sections = [
@@ -35,6 +36,19 @@ const Disclaimer = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Disclaimer - Important Legal Information | Trusted Vehicles</title>
+        <meta 
+          name="description" 
+          content="Read Trusted Vehicles disclaimer and legal information regarding vehicle inspections, services, and website usage. Important information for buyers and sellers."
+        />
+        <meta name="keywords" content="disclaimer, legal information, terms of use, vehicle inspection disclaimer, trusted vehicles legal" />
+        <meta property="og:title" content="Disclaimer - Legal Information" />
+        <meta property="og:description" content="Important legal information and disclaimer for Trusted Vehicles services" />
+        <meta property="og:url" content="https://trustedvehicles.com/disclaimer" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/disclaimer" />
+      </Helmet>
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-trust-50 to-blue-100">
         <div className="max-w-7xl mx-auto text-center">

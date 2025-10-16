@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
 import { DollarSign, Car, MapPin, CheckCircle, Upload } from 'lucide-react';
+import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -102,6 +103,19 @@ const SellRequest = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-trust-50 to-blue-100">
+      <Helmet>
+        <title>Sell Your Car Request - Get Best Price | Trusted Vehicles</title>
+        <meta 
+          name="description" 
+          content="Submit a request to sell your car at the best market price. Free inspection, transparent pricing, and hassle-free process. Get instant valuation for your vehicle."
+        />
+        <meta name="keywords" content="sell car request, car valuation, sell my car india, car selling process, best car price" />
+        <meta property="og:title" content="Sell Your Car Request - Get Best Price" />
+        <meta property="og:description" content="Submit request to sell your car. Get free inspection and best market price" />
+        <meta property="og:url" content="https://trustedvehicles.com/sell-request" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/sell-request" />
+      </Helmet>
       <div className="section-padding">
         <div className="max-w-4xl mx-auto">
           {/* Header */}

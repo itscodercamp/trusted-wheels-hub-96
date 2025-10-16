@@ -1,6 +1,6 @@
-
 import { Users, Award, Target, Heart } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
+import { Helmet } from 'react-helmet-async';
 
 const Team = () => {
   const founders = [
@@ -95,6 +95,19 @@ const Team = () => {
 
   return (
     <div>
+      <Helmet>
+        <title>Our Team - Trusted Vehicles Leadership | Expert Automotive Professionals</title>
+        <meta 
+          name="description" 
+          content="Meet the expert team at Trusted Vehicles. Our leadership and automotive professionals with 15+ years experience are revolutionizing India's car inspection and marketplace industry."
+        />
+        <meta name="keywords" content="trusted vehicles team, car experts india, automotive professionals, vehicle inspection experts, leadership team" />
+        <meta property="og:title" content="Our Team - Trusted Vehicles Leadership" />
+        <meta property="og:description" content="Meet the expert automotive professionals at Trusted Vehicles with 15+ years industry experience" />
+        <meta property="og:url" content="https://trustedvehicles.com/team" />
+        <meta property="og:type" content="website" />
+        <link rel="canonical" href="https://trustedvehicles.com/team" />
+      </Helmet>
       {/* Hero Section */}
       <section className="section-padding bg-gradient-to-br from-trust-50 to-blue-100">
         <div className="max-w-7xl mx-auto text-center">
