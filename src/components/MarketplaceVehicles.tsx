@@ -92,6 +92,8 @@ const MarketplaceVehicles = () => {
                   <img 
                     src={`https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev${vehicle.imageUrl}`} 
                     alt={`${vehicle.make} ${vehicle.model}`}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-32 md:h-40 object-cover group-hover:scale-110 transition-transform duration-300"
                     onError={(e) => {
                       e.currentTarget.src = '/placeholder.svg';

@@ -219,6 +219,8 @@ const Gallery = () => {
                     <img 
                       src={car.image} 
                       alt={`${car.make} ${car.model}`}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-48 object-cover"
                     />
                     {car.inspected && (

@@ -10,7 +10,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="lg:col-span-1">
             <div className="flex items-center space-x-2 mb-6">
-              <img src="/brand-logo.png" alt="TrustedVehicles Logo" className="w-8 h-8 object-contain rounded-md" /> {/* Added brand logo */}
+              <img src="/brand-logo.png" alt="TrustedVehicles Logo" loading="lazy" decoding="async" className="w-8 h-8 object-contain rounded-md" /> {/* Added brand logo */}
               <span className="text-xl font-bold">TrustedVehicles</span>
             </div>
             
@@ -20,16 +20,16 @@ const Footer = () => {
             </p>
             
             <div className="flex space-x-4">
-              <a href="#" className="p-2 bg-gray-800 rounded-lg hover:bg-trust-600 transition-colors">
+              <a href="https://facebook.com/trustedvehicles" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-trust-600 transition-colors">
                 <Facebook className="h-5 w-5" />
               </a>
               <a href="#" className="p-2 bg-gray-800 rounded-lg hover:bg-trust-600 transition-colors">
                 <Twitter className="h-5 w-5" />
               </a>
-              <a href="#" className="p-2 bg-gray-800 rounded-lg hover:bg-trust-600 transition-colors">
+              <a href="https://instagram.com/trustedvehicles" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-trust-600 transition-colors">
                 <Instagram className="h-5 w-5" />
               </a>
-              <a href="#" className="p-2 bg-gray-800 rounded-lg hover:bg-trust-600 transition-colors">
+              <a href="https://www.linkedin.com/company/trustedvehicles" target="_blank" rel="noopener noreferrer" className="p-2 bg-gray-800 rounded-lg hover:bg-trust-600 transition-colors">
                 <Linkedin className="h-5 w-5" />
               </a>
             </div>
@@ -45,6 +45,9 @@ const Footer = () => {
               <li><a href="/team" className="text-gray-300 hover:text-trust-400 transition-colors">Our Team</a></li>
               <li><a href="/faqs" className="text-gray-300 hover:text-trust-400 transition-colors">FAQs</a></li>
               <li><a href="/contact" className="text-gray-300 hover:text-trust-400 transition-colors">Contact Us</a></li>
+              <li><a href="https://ims.trustedvehicles.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-trust-400 transition-colors">IMS Portal</a></li>
+              <li><a href="https://marketplace.trustedvehicles.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-trust-400 transition-colors">Marketplace</a></li>
+              <li><a href="https://blog.trustedvehicles.com" target="_blank" rel="noopener noreferrer" className="text-gray-300 hover:text-trust-400 transition-colors">Blog</a></li>
             </ul>
           </div>
 
@@ -108,7 +111,7 @@ const Footer = () => {
             <div className="flex space-x-6 text-sm">
               <a href="/terms" className="text-gray-400 hover:text-trust-400 transition-colors">Terms & Conditions</a>
               <a href="/privacy" className="text-gray-400 hover:text-trust-400 transition-colors">Privacy Policy</a>
-              <a href="/cookies" className="text-gray-400 hover:text-trust-400 transition-colors">Cookie Policy</a> {/* Updated link */}
+              <a href="/cookie-policy" className="text-gray-400 hover:text-trust-400 transition-colors">Cookie Policy</a> {/* Updated link */}
               <a href="/disclaimer" className="text-gray-400 hover:text-trust-400 transition-colors">Disclaimer</a> {/* Updated link */}
             </div>
           </div>

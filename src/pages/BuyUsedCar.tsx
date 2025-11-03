@@ -148,6 +148,8 @@ const BuyUsedCar = () => {
                   <img 
                     src={car.image} 
                     alt={`${car.make} ${car.model}`}
+                    loading="lazy"
+                    decoding="async"
                     className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
                   />
                   <div className="absolute top-4 left-4">

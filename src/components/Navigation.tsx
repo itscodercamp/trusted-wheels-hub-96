@@ -40,6 +40,8 @@ const Navigation = () => {
               <img 
                 src="/brand-logo.png" 
                 alt="TrustedVehicles Logo" 
+                decoding="async"
+                fetchPriority="high"
                 className="w-8 h-8 sm:w-10 sm:h-10 object-contain rounded-md" /> {/* Added rounded-md class */}
               <span className="text-xl sm:text-2xl font-bold text-foreground">
                 <span className="text-primary">Trusted</span>Vehicles

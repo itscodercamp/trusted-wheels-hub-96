@@ -42,6 +42,8 @@ const HeroSection = () => {
         <img 
           src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1920&h=1080&fit=crop" 
           alt="Car background"
+          decoding="async"
+          fetchPriority="high"
           className="w-full h-full object-cover"
         />
       </div>

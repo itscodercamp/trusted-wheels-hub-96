@@ -96,6 +96,8 @@ const MarketplaceSection = () => {
                 <img 
                   src={vehicle.image} 
                   alt={`${vehicle.make} ${vehicle.model}`}
+                  loading="lazy"
+                  decoding="async"
                   className="w-full h-48 lg:h-56 object-cover"
                 />
                 <div className="absolute top-3 left-3">

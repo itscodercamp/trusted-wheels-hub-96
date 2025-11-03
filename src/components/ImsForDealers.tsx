@@ -137,7 +137,7 @@ const ImsForDealers = () => {
                 </ul>
               </div>
               <div className="rounded-xl overflow-hidden shadow-xl">
-                <img src={section.image} alt={section.title} className="w-full h-auto object-cover" />
+                <img src={section.image} alt={section.title} loading="lazy" decoding="async" className="w-full h-auto object-cover" />
               </div>
             </div>
           ))}
