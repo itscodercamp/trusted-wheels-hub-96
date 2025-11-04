@@ -5,16 +5,18 @@ import { Button } from '@/components/ui/button';
 import { ChevronLeft, ChevronRight, MapPin, Fuel, Gauge, Calendar } from 'lucide-react';
 
 interface Vehicle {
-  id: number;
-  title: string;
-  price: string;
+  id: string;
+  make: string;
+  model: string;
+  variant: string;
+  price: number;
   year: number;
-  mileage: string;
-  fuel_type: string;
+  odometer: number;
+  fuelType: string;
   transmission: string;
-  location: string;
-  image: string;
-  is_featured: boolean;
+  rtoState: string;
+  imageUrl: string;
+  verified: boolean;
 }
 
 const MarketplaceVehicles = () => {
@@ -124,26 +126,27 @@ const MarketplaceVehicles = () => {
               <Card key={`${vehicle.id}-${index}`} className="trust-card overflow-hidden group animate-fade-in">
                 <div className="relative h-48 overflow-hidden">
                   <img
-                    src={`${API_BASE}${vehicle.image}`}
-                    alt={vehicle.title}
+                    src={`${API_BASE}${vehicle.imageUrl}`}
+                    alt={`${vehicle.make} ${vehicle.model}`}
                     className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                     loading="lazy"
                     decoding="async"
                   />
-                  {vehicle.is_featured && (
+                  {vehicle.verified && (
                     <Badge className="absolute top-2 right-2 bg-trust-500 text-white">
-                      Featured
+                      Verified
                     </Badge>
                   )}
                 </div>
                 
                 <CardContent className="p-4">
                   <h3 className="font-bold text-lg text-foreground mb-2 truncate">
-                    {vehicle.title}
+                    {vehicle.make} {vehicle.model}
                   </h3>
+                  <p className="text-xs text-muted-foreground mb-2">{vehicle.variant}</p>
                   
                   <div className="text-2xl font-bold text-trust-600 mb-3">
-                    ₹{vehicle.price}
+                    ₹{vehicle.price.toLocaleString('en-IN')}
                   </div>
                   
                   <div className="space-y-2 text-sm text-muted-foreground">
@@ -154,21 +157,21 @@ const MarketplaceVehicles = () => {
                       </div>
                       <div className="flex items-center">
                         <Gauge className="h-4 w-4 mr-1" />
-                        <span>{vehicle.mileage}</span>
+                        <span>{vehicle.odometer.toLocaleString()} km</span>
                       </div>
                     </div>
                     
                     <div className="flex items-center justify-between">
                       <div className="flex items-center">
                         <Fuel className="h-4 w-4 mr-1" />
-                        <span>{vehicle.fuel_type}</span>
+                        <span>{vehicle.fuelType}</span>
                       </div>
                       <span>{vehicle.transmission}</span>
                     </div>
                     
                     <div className="flex items-center text-trust-600 pt-2 border-t border-border">
                       <MapPin className="h-4 w-4 mr-1" />
-                      <span className="truncate">{vehicle.location}</span>
+                      <span className="truncate">{vehicle.rtoState}</span>
                     </div>
                   </div>
                   
