@@ -1,38 +1,36 @@
 import { useState, useEffect } from 'react';
-import { Car, MapPin, Calendar, Fuel, ArrowRight, Star } from 'lucide-react';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight, MapPin, Fuel, Gauge, Calendar } from 'lucide-react';
 
 interface Vehicle {
-  id: string;
-  make: string;
-  model: string;
-  variant: string;
-  price: number;
-  fuelType: string;
-  odometer: number;
-  rtoState: string;
-  imageUrl: string;
+  id: number;
+  title: string;
+  price: string;
+  year: number;
+  mileage: string;
+  fuel_type: string;
+  transmission: string;
+  location: string;
+  image: string;
+  is_featured: boolean;
 }
 
 const MarketplaceVehicles = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const API_BASE = 'https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev';
 
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        const response = await fetch('https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev/api/marketplace/vehicles');
-        if (!response.ok) {
-          throw new Error('Failed to fetch vehicles');
-        }
+        const response = await fetch(`${API_BASE}/api/marketplace/vehicles`);
         const data = await response.json();
         setVehicles(data);
-      } catch (err) {
-        setError('Failed to load vehicles');
-        console.error('Error fetching vehicles:', err);
+      } catch (error) {
+        console.error('Error fetching vehicles:', error);
       } finally {
         setLoading(false);
       }
@@ -41,120 +39,189 @@ const MarketplaceVehicles = () => {
     fetchVehicles();
   }, []);
 
-  const handleVehicleClick = () => {
-    window.open('https://marketplace.trustedvehicles.com', '_blank');
+  // Auto-slide every 7 seconds
+  useEffect(() => {
+    if (vehicles.length === 0) return;
+    
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % vehicles.length);
+    }, 7000);
+
+    return () => clearInterval(interval);
+  }, [vehicles.length]);
+
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev - 1 + vehicles.length) % vehicles.length);
   };
 
-  const formatPrice = (price: number) => {
-    return `₹${(price / 100000).toFixed(2)} Lakh`;
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev + 1) % vehicles.length);
   };
 
-  const formatOdometer = (odometer: number) => {
-    return `${(odometer / 1000).toFixed(0)}k km`;
+  const getVisibleVehicles = () => {
+    if (vehicles.length === 0) return [];
+    const visible = [];
+    for (let i = 0; i < 4; i++) {
+      visible.push(vehicles[(currentIndex + i) % vehicles.length]);
+    }
+    return visible;
   };
+
+  if (loading) {
+    return (
+      <section id="marketplace-section" className="section-padding bg-background">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-8 lg:mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
+              Browse Our <span className="text-trust-500">Vehicle Marketplace</span>
+            </h2>
+          </div>
+          <div className="flex justify-center items-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-trust-500"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  const visibleVehicles = getVisibleVehicles();
 
   return (
-    <section className="section-padding bg-gray-50 dark:bg-background/50">
+    <section id="marketplace-section" className="section-padding bg-background">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-12">
-          <Badge className="bg-primary/10 text-primary border-primary/20 mb-4">
-            Marketplace
-          </Badge>
-          <h2 className="text-3xl xl:text-4xl font-bold text-foreground mb-4">
-            Browse Our Vehicle Marketplace
+        <div className="text-center mb-8 lg:mb-12">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-4">
+            Browse Our <span className="text-trust-500">Vehicle Marketplace</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Discover verified vehicles from trusted dealers and private sellers across India
+          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto">
+            Explore our curated selection of quality vehicles. All inspected and verified.
           </p>
         </div>
 
-        {/* Loading State */}
-        {loading ? (
-          <div className="text-center py-12">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
-            <p className="mt-4 text-muted-foreground">Loading vehicles...</p>
-          </div>
-        ) : error ? (
-          <div className="text-center py-12">
-            <p className="text-red-500 mb-4">{error}</p>
-            <Button onClick={() => window.location.reload()}>Try Again</Button>
-          </div>
-        ) : (
-          /* Responsive Grid: 2 cols mobile, 3 cols tablet, 6 cols desktop */
-          <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 md:gap-6 mb-8">
-            {vehicles.map((vehicle) => (
-              <Card 
-                key={vehicle.id} 
-                className="cars24-card overflow-hidden cursor-pointer group hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-                onClick={handleVehicleClick}
-              >
-                <div className="relative">
-                  <img 
-                    src={`https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev${vehicle.imageUrl}`} 
-                    alt={`${vehicle.make} ${vehicle.model}`}
+        <div className="relative">
+          {/* Navigation Buttons */}
+          <Button
+            variant="outline"
+            size="icon"
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-10 rounded-full shadow-lg bg-background hover:bg-trust-500 hover:text-white -ml-4 hidden lg:flex"
+            onClick={handlePrev}
+          >
+            <ChevronLeft className="h-6 w-6" />
+          </Button>
+          
+          <Button
+            variant="outline"
+            size="icon"
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-10 rounded-full shadow-lg bg-background hover:bg-trust-500 hover:text-white -mr-4 hidden lg:flex"
+            onClick={handleNext}
+          >
+            <ChevronRight className="h-6 w-6" />
+          </Button>
+
+          {/* Vehicle Cards */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {visibleVehicles.map((vehicle, index) => (
+              <Card key={`${vehicle.id}-${index}`} className="trust-card overflow-hidden group animate-fade-in">
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={`${API_BASE}${vehicle.image}`}
+                    alt={vehicle.title}
+                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
                     loading="lazy"
                     decoding="async"
-                    className="w-full h-32 md:h-40 object-cover group-hover:scale-110 transition-transform duration-300"
-                    onError={(e) => {
-                      e.currentTarget.src = '/placeholder.svg';
-                    }}
                   />
-                  <div className="absolute top-2 left-2">
-                    <Badge className="bg-green-500 text-white text-xs">
-                      <Star className="h-3 w-3 mr-1" />
-                      Verified
+                  {vehicle.is_featured && (
+                    <Badge className="absolute top-2 right-2 bg-trust-500 text-white">
+                      Featured
                     </Badge>
-                  </div>
-                  <div className="absolute top-2 right-2 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-foreground">
-                    {formatPrice(vehicle.price)}
-                  </div>
+                  )}
                 </div>
                 
-                <CardContent className="p-3 md:p-4">
-                  <h3 className="font-bold text-foreground mb-1 text-sm">
-                    {vehicle.make} {vehicle.model}
+                <CardContent className="p-4">
+                  <h3 className="font-bold text-lg text-foreground mb-2 truncate">
+                    {vehicle.title}
                   </h3>
-                  <p className="text-xs text-muted-foreground mb-2 line-clamp-1">{vehicle.variant}</p>
                   
-                  <div className="space-y-1 text-xs text-muted-foreground mb-3">
-                    <div className="flex items-center">
-                      <MapPin className="h-3 w-3 mr-1 flex-shrink-0" />
-                      <span className="truncate">{vehicle.rtoState}</span>
+                  <div className="text-2xl font-bold text-trust-600 mb-3">
+                    ₹{vehicle.price}
+                  </div>
+                  
+                  <div className="space-y-2 text-sm text-muted-foreground">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center">
+                        <Calendar className="h-4 w-4 mr-1" />
+                        <span>{vehicle.year}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Gauge className="h-4 w-4 mr-1" />
+                        <span>{vehicle.mileage}</span>
+                      </div>
                     </div>
-                    <div className="flex items-center justify-between gap-2">
+                    
+                    <div className="flex items-center justify-between">
                       <div className="flex items-center">
-                        <Calendar className="h-3 w-3 mr-1 flex-shrink-0" />
-                        {formatOdometer(vehicle.odometer)}
+                        <Fuel className="h-4 w-4 mr-1" />
+                        <span>{vehicle.fuel_type}</span>
                       </div>
-                      <div className="flex items-center">
-                        <Fuel className="h-3 w-3 mr-1 flex-shrink-0" />
-                        {vehicle.fuelType}
-                      </div>
+                      <span>{vehicle.transmission}</span>
+                    </div>
+                    
+                    <div className="flex items-center text-trust-600 pt-2 border-t border-border">
+                      <MapPin className="h-4 w-4 mr-1" />
+                      <span className="truncate">{vehicle.location}</span>
                     </div>
                   </div>
                   
-                  <Button size="sm" className="w-full text-xs h-8">
+                  <Button className="w-full mt-4 btn-primary">
                     View Details
-                    <ArrowRight className="h-3 w-3 ml-1" />
                   </Button>
                 </CardContent>
               </Card>
             ))}
           </div>
-        )}
 
-        <div className="text-center">
+          {/* Mobile Navigation */}
+          <div className="flex justify-center gap-4 mt-6 lg:hidden">
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-full"
+              onClick={handlePrev}
+            >
+              <ChevronLeft className="h-5 w-5" />
+            </Button>
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-full"
+              onClick={handleNext}
+            >
+              <ChevronRight className="h-5 w-5" />
+            </Button>
+          </div>
+
+          {/* Progress Indicators */}
+          <div className="flex justify-center gap-2 mt-6">
+            {vehicles.map((_, index) => (
+              <button
+                key={index}
+                className={`h-2 rounded-full transition-all ${
+                  index === currentIndex ? 'w-8 bg-trust-500' : 'w-2 bg-gray-300'
+                }`}
+                onClick={() => setCurrentIndex(index)}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="text-center mt-8">
           <Button 
             size="lg" 
-            className="btn-primary text-lg px-8 py-4"
-            onClick={handleVehicleClick}
+            className="btn-primary"
+            onClick={() => window.location.href = '/marketplace-landing'}
           >
-            <Car className="h-5 w-5 mr-2" />
-            Explore Full Marketplace
+            View All Vehicles
           </Button>
-          <p className="text-sm text-muted-foreground mt-2">
-            Discover thousands of verified vehicles
-          </p>
         </div>
       </div>
     </section>

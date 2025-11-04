@@ -24,7 +24,8 @@ const SellCar = () => {
     sellerName: '',
     phone: '',
     email: '',
-    description: ''
+    description: '',
+    rcImage: null as File | null
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   
@@ -34,17 +35,29 @@ const SellCar = () => {
     setFormData(prev => ({ ...prev, [field]: value }));
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      setFormData(prev => ({ ...prev, rcImage: e.target.files![0] }));
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
     
     try {
+      const formDataToSend = new FormData();
+      Object.keys(formData).forEach(key => {
+        if (key === 'rcImage' && formData.rcImage) {
+          formDataToSend.append('rcImage', formData.rcImage);
+        } else if (key !== 'rcImage') {
+          formDataToSend.append(key, formData[key as keyof typeof formData] as string);
+        }
+      });
+
       const response = await fetch('https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev/api/sell-requests', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
+        body: formDataToSend,
       });
 
       if (response.ok) {
@@ -68,14 +81,14 @@ const SellCar = () => {
           sellerName: '',
           phone: '',
           email: '',
-          description: ''
+          description: '',
+          rcImage: null
         });
       } else {
-        // Attempt to parse error message from response if available
         const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
         throw new Error(errorData.message || 'Failed to submit sell request');
       }
-    } catch (error: any) { // Explicitly type error as any for message property
+    } catch (error: any) {
       console.error('Error submitting sell request:', error);
       toast({
         title: "Error Submitting Request",
@@ -301,14 +314,27 @@ const SellCar = () => {
                   />
                 </div>
 
+                {/* RC Image Upload */}
+                <div>
+                  <Label htmlFor="rcImage">Upload RC (Registration Certificate) Image</Label>
+                  <Input 
+                    id="rcImage"
+                    type="file"
+                    accept="image/*"
+                    onChange={handleFileChange}
+                    className="cursor-pointer"
+                  />
+                  <p className="text-xs text-muted-foreground mt-1">Required for verification</p>
+                </div>
+
                 {/* Photo Upload */}
                 <div>
-                  <Label>Upload Car Photos</Label>
+                  <Label>Upload Car Photos (Optional)</Label>
                   <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center">
                     <Upload className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
                     <p className="text-muted-foreground mb-2">Drag & drop photos or click to upload</p>
                     <p className="text-sm text-muted-foreground">Upload up to 10 photos (JPG, PNG)</p>
-                    <Button variant="outline" className="mt-4">
+                    <Button type="button" variant="outline" className="mt-4">
                       Choose Photos
                     </Button>
                   </div>

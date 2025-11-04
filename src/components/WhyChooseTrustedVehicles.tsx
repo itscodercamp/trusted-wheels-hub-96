@@ -79,8 +79,8 @@ const WhyChooseTrustedVehicles = () => {
         {/* Stats Section */}
         <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
           <div>
-            <div className="text-3xl font-bold text-primary mb-2">50,000+</div>
-            <div className="text-muted-foreground">Vehicles Inspected</div>
+            <div className="text-3xl font-bold text-primary mb-2">Happy Customers</div>
+            <div className="text-muted-foreground">Satisfied customers across India</div>
           </div>
           <div>
             <div className="text-3xl font-bold text-primary mb-2">25+</div>

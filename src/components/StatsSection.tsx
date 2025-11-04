@@ -12,8 +12,8 @@ const StatsSection = () => {
     },
     {
       icon: Car,
-      value: "15,000+",
-      label: "Cars Inspected",
+      value: "50,000+",
+      label: "Vehicles Inspected",
       description: "Vehicles thoroughly inspected"
     },
     {
@@ -36,7 +36,7 @@ const StatsSection = () => {
     },
     {
       icon: TrendingUp,
-      value: "₹500Cr+",
+      value: "Lakhs",
       label: "Transactions",
       description: "Total transaction value"
     }

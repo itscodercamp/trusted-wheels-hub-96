@@ -24,14 +24,14 @@ const InspectionServices = () => {
     },
     {
       icon: FileText,
-      title: "Bank Loan Valuation Inspection",
-      description: "Official inspection report for bank loan approval and insurance claims",
-      price: "₹1,299",
+      title: "Instant Valuation",
+      description: "Get accurate car valuation instantly for selling or trade-in purposes",
+      price: "₹999",
       features: [
-        "Bank Approved Format",
-        "Official Valuation Certificate",
-        "Insurance Documentation",
-        "Legal Compliance Check",
+        "Instant Valuation Report",
+        "Market Price Analysis",
+        "Condition Assessment",
+        "Resale Value Estimation",
         "Fast Processing"
       ],
       color: "bg-green-500"

@@ -11,19 +11,18 @@ const HeroSection = () => {
   const { requestLocation, latitude, longitude, error, loading } = useLocation();
 
   const services = [
-    { icon: Car, label: 'Buy Used Car', active: true, path: '/buy-used-car' },
+    { icon: Car, label: 'Buy Used Car', active: true, path: '/buy-used-car', scrollTo: 'marketplace' },
     { icon: DollarSign, label: 'Sell Car', active: false, path: '/sell-car' },
-    { icon: FileText, label: 'IMS Dealer', active: false, path: 'https://ims.trustedvehicles.com' },
-    { icon: Zap, label: 'Marketplace', active: false, path: '/marketplace-landing' },
-    { icon: CreditCard, label: 'Car Loan', active: false, path: '/car-loan', isComingSoon: true },
-    { icon: User, label: 'Personal Loan', active: false, path: '/personal-loan', isComingSoon: true },
-    { icon: Shield, label: 'Insurance', active: false, path: '/insurance', isComingSoon: true },
-    { icon: History, label: 'Vehicle History', active: false, path: '/vehicle-history', isComingSoon: true },
+    { icon: FileText, label: 'IMS', active: false, path: 'https://ims.trustedvehicles.com' },
+    { icon: Zap, label: 'Dealer Marketplace', active: false, path: '/marketplace-landing' },
   ];
 
   const handleServiceClick = (service: typeof services[0]) => {
-    if (service.isComingSoon) {
-      // Do nothing if the service is coming soon
+    if (service.scrollTo === 'marketplace') {
+      const element = document.getElementById('marketplace-section');
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
       return;
     }
     if (service.path.startsWith('http')) {
@@ -79,11 +78,11 @@ const HeroSection = () => {
             </div>
 
             {/* Services Grid */}
-            <div className="grid grid-cols-4 gap-3 mb-6">
+            <div className="grid grid-cols-2 gap-3 mb-6">
               {services.map((service, index) => (
                 <Card 
                   key={index} 
-                  className={`relative overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl backdrop-blur-sm bg-white/20 dark:bg-background/20 border-white/30 shadow-lg ${service.active ? 'bg-primary/10 border-primary/30' : ''} ${service.isComingSoon ? 'pointer-events-none' : 'cursor-pointer'}`}
+                  className={`relative overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl backdrop-blur-sm bg-white/20 dark:bg-background/20 border-white/30 shadow-lg ${service.active ? 'bg-primary/10 border-primary/30' : ''} cursor-pointer`}
                   onClick={() => handleServiceClick(service)}
                   style={{
                     boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
@@ -93,18 +92,9 @@ const HeroSection = () => {
                   }}
                 >
                   <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
-                  <CardContent className={`relative p-3 text-center ${service.isComingSoon ? 'opacity-70' : ''}`}>
-                    {service.isComingSoon && ( // Conditional rendering based on isComingSoon
-                      <div className="absolute -top-1 -right-1 z-20"> {/* Increased z-index */}
-                        <div className="p-[2px] rounded-full bg-gradient-to-r from-yellow-300 to-amber-600">
-                          <Badge className="bg-amber-400 text-white text-xs font-bold px-2 py-1 rounded-full">
-                            Soon
-                          </Badge>
-                        </div>
-                      </div>
-                    )}
-                    <service.icon className={`w-6 h-6 mx-auto mb-1 drop-shadow-sm ${service.active ? 'text-primary' : 'text-foreground'}`} />
-                    <p className={`text-xs font-medium drop-shadow-sm ${service.active ? 'text-primary' : 'text-foreground'}`}>
+                  <CardContent className="relative p-4 text-center">
+                    <service.icon className={`w-8 h-8 mx-auto mb-2 drop-shadow-sm ${service.active ? 'text-primary' : 'text-foreground'}`} />
+                    <p className={`text-sm font-medium drop-shadow-sm ${service.active ? 'text-primary' : 'text-foreground'}`}>
                       {service.label}
                     </p>
                   </CardContent>
@@ -139,13 +129,13 @@ const HeroSection = () => {
                 <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
                 <CardContent className="relative p-6">
                   {/* Services */}
-                  <div className="grid grid-cols-4 gap-4 mb-8">
-                    {services.slice(0, 8).map((service, index) => (
+                  <div className="grid grid-cols-2 gap-4 mb-8">
+                    {services.map((service, index) => (
                       <div 
                         key={index} 
-                        className={`relative overflow-hidden flex flex-col items-center p-3 rounded-xl transition-all duration-300 transform hover:scale-105 backdrop-blur-sm bg-white/10 dark:bg-background/10 border-white/20 shadow-lg hover:shadow-xl ${
+                        className={`relative overflow-hidden flex flex-col items-center p-4 rounded-xl transition-all duration-300 transform hover:scale-105 backdrop-blur-sm bg-white/10 dark:bg-background/10 border-white/20 shadow-lg hover:shadow-xl ${
                           service.active ? 'bg-primary/20 border-primary/30' : ''
-                        } ${service.isComingSoon ? 'pointer-events-none' : 'cursor-pointer'}`}
+                        } cursor-pointer`}
                         onClick={() => handleServiceClick(service)}
                         style={{
                           boxShadow: '0 4px 20px 0 rgba(31, 38, 135, 0.2)',
@@ -155,19 +145,8 @@ const HeroSection = () => {
                         }}
                       >
                         <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
-                        <div className={`${service.isComingSoon ? 'opacity-70' : ''}`}> {/* Apply opacity to content */}
-                          {service.isComingSoon && ( // Conditional rendering based on isComingSoon
-                            <div className="absolute -top-1 -right-1 z-20"> {/* Increased z-index */}
-                              <div className="p-[2px] rounded-full bg-gradient-to-r from-yellow-300 to-amber-600">
-                                <Badge className="bg-amber-400 text-white text-xs font-bold px-2 py-1 rounded-full">
-                                  Soon
-                                </Badge>
-                              </div>
-                            </div>
-                          )}
-                          <service.icon className={`relative w-8 h-8 mb-2 drop-shadow-sm ${service.active ? 'text-primary' : 'text-foreground'}`} />
-                          <span className="relative text-sm font-medium text-center drop-shadow-sm">{service.label}</span>
-                        </div>
+                        <service.icon className={`w-10 h-10 mb-3 drop-shadow-sm ${service.active ? 'text-primary' : 'text-foreground'}`} />
+                        <span className="text-base font-medium text-center drop-shadow-sm">{service.label}</span>
                       </div>
                     ))}
                   </div>

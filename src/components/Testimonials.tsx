@@ -6,42 +6,42 @@ const Testimonials = () => {
   const testimonials = [
     {
       name: "Rajesh Kumar",
-      location: "Mumbai",
+      location: "Nagpur",
       rating: 5,
       text: "TrustedVehicles helped me find the perfect car with complete transparency. The inspection report was detailed and honest. Highly recommended!",
       purchase: "Honda City 2020"
     },
     {
       name: "Priya Sharma",
-      location: "Delhi",
+      location: "Nagpur",
       rating: 5,
       text: "Sold my car through their platform and got an excellent price. The entire process was smooth and professional. Great service!",
       purchase: "Sold Maruti Swift"
     },
     {
       name: "Arun Patel",
-      location: "Bangalore",
+      location: "Nagpur",
       rating: 5,
       text: "The 200-point inspection saved me from buying a problematic car. Their team is knowledgeable and trustworthy. Worth every rupee!",
       purchase: "Hyundai Creta 2021"
     },
     {
       name: "Sneha Reddy",
-      location: "Chennai",
+      location: "Nagpur",
       rating: 5,
       text: "Amazing experience from start to finish. Found verified dealers and got the best deal in the market. Will definitely use again!",
       purchase: "Tata Nexon 2020"
     },
     {
       name: "Vikram Singh",
-      location: "Pune",
+      location: "Nagpur",
       rating: 5,
       text: "Professional service with complete transparency. The inspection report gave me confidence in my purchase decision.",
       purchase: "Mahindra XUV500"
     },
     {
       name: "Kavita Joshi",
-      location: "Hyderabad",
+      location: "Nagpur",
       rating: 5,
       text: "Excellent platform for car buying. The team guided me through every step and helped me get the perfect vehicle for my family.",
       purchase: "Kia Seltos 2021"
