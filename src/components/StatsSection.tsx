@@ -6,21 +6,21 @@ const StatsSection = () => {
   const stats = [
     {
       icon: Users,
-      value: "50,000+",
+      value: "100+",
       label: "Happy Customers",
-      description: "Satisfied customers across India"
+      description: "Satisfied customers across Nagpur"
     },
     {
       icon: Car,
-      value: "50,000+",
+      value: "1,000+",
       label: "Vehicles Inspected",
       description: "Vehicles thoroughly inspected"
     },
     {
       icon: MapPin,
-      value: "25+",
-      label: "Cities",
-      description: "Pan-India presence"
+      value: "Nagpur",
+      label: "Coverage",
+      description: "Covering whole Nagpur"
     },
     {
       icon: Shield,

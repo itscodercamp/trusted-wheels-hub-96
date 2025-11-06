@@ -77,22 +77,22 @@ const WhyChooseTrustedVehicles = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-8 text-center">
           <div>
-            <div className="text-3xl font-bold text-primary mb-2">Happy Customers</div>
-            <div className="text-muted-foreground">Satisfied customers across India</div>
+            <div className="text-2xl sm:text-3xl font-bold text-primary mb-2">100+</div>
+            <div className="text-sm sm:text-base text-muted-foreground">Happy Customers</div>
           </div>
           <div>
-            <div className="text-3xl font-bold text-primary mb-2">25+</div>
-            <div className="text-muted-foreground">Cities Covered</div>
+            <div className="text-2xl sm:text-3xl font-bold text-primary mb-2">Nagpur</div>
+            <div className="text-sm sm:text-base text-muted-foreground">Coverage Area</div>
           </div>
           <div>
-            <div className="text-3xl font-bold text-primary mb-2">98%</div>
-            <div className="text-muted-foreground">Customer Satisfaction</div>
+            <div className="text-2xl sm:text-3xl font-bold text-primary mb-2">98%</div>
+            <div className="text-sm sm:text-base text-muted-foreground">Satisfaction</div>
           </div>
           <div>
-            <div className="text-3xl font-bold text-primary mb-2">24hrs</div>
-            <div className="text-muted-foreground">Report Delivery</div>
+            <div className="text-2xl sm:text-3xl font-bold text-primary mb-2">24hrs</div>
+            <div className="text-sm sm:text-base text-muted-foreground">Report Delivery</div>
           </div>
         </div>
       </div>

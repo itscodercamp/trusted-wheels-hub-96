@@ -71,8 +71,8 @@ const MarketplaceSection = () => {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-8 mb-8 lg:mb-12">
           {[
             { label: "Verified Cars", value: "5,000+" },
-            { label: "Happy Customers", value: "50,000+" },
-            { label: "Cities", value: "25+" },
+            { label: "Happy Customers", value: "100+" },
+            { label: "Coverage", value: "Nagpur" },
             { label: "Avg. Rating", value: "4.8★" }
           ].map((stat, index) => (
             <Card key={index} className="text-center p-4 lg:p-6">

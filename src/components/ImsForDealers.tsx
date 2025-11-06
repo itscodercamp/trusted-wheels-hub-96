@@ -214,12 +214,12 @@ const ImsForDealers = () => {
         <div className="text-center mt-16">
           <Button 
             size="lg" 
-            className="btn-primary text-lg px-8 py-4"
+            className="btn-primary text-sm sm:text-base lg:text-lg px-4 sm:px-6 lg:px-8 py-3 sm:py-4 flex-wrap justify-center"
             onClick={() => navigate('/contact')} 
           >
-            <Shield className="h-5 w-5 mr-2" />
-            Partner with TrustedVehicles IMS
-            <ArrowRight className="h-5 w-5 ml-2" />
+            <Shield className="h-4 w-4 sm:h-5 sm:w-5 mr-2" />
+            <span className="whitespace-normal sm:whitespace-nowrap">Partner with TrustedVehicles IMS</span>
+            <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5 ml-2" />
           </Button>
         </div>
       </div>

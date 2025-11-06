@@ -21,8 +21,8 @@ const TrustSection = () => {
     },
     {
       icon: Users,
-      title: "50,000+ Happy Customers",
-      description: "Join thousands of satisfied customers who trust us with their vehicle needs"
+      title: "100+ Happy Customers",
+      description: "Join hundreds of satisfied customers who trust us with their vehicle needs"
     },
     {
       icon: Award,

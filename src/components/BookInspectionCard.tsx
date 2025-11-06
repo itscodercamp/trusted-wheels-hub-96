@@ -183,7 +183,7 @@ const BookInspectionCard = () => {
                   <div className="space-y-3">
                     <div className="flex items-center text-muted-foreground">
                       <MapPin className="h-5 w-5 mr-3" />
-                      <span>Available in 25+ cities across India</span>
+                      <span>Available in Nagpur</span>
                     </div>
                     <div className="flex items-center text-muted-foreground">
                       <Calendar className="h-5 w-5 mr-3" />
