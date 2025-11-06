@@ -1,11 +1,49 @@
-import React from 'react';
-import { Car, ArrowRight, Shield, Users, DollarSign } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Car, ArrowRight, Shield, Users, DollarSign, MapPin, Fuel, Gauge, Calendar } from 'lucide-react';
 import { Helmet } from 'react-helmet-async';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+
+interface Vehicle {
+  id: string;
+  make: string;
+  model: string;
+  variant: string;
+  price: number;
+  year: number;
+  odometer: number;
+  fuelType: string;
+  transmission: string;
+  rtoState: string;
+  imageUrl: string;
+  verified: boolean;
+}
 
 const MarketplaceLanding = () => {
-  const externalMarketplaceUrl = 'https://marketplace.trustedvehicles.com';
+  const [vehicles, setVehicles] = useState<Vehicle[]>([]);
+  const [loading, setLoading] = useState(true);
+  const API_BASE = 'https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev';
+
+  useEffect(() => {
+    const fetchVehicles = async () => {
+      try {
+        const response = await fetch(`${API_BASE}/api/marketplace/vehicles`);
+        const data = await response.json();
+        setVehicles(data);
+      } catch (error) {
+        console.error('Error fetching vehicles:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchVehicles();
+  }, []);
+
+  const handleVehicleClick = (vehicleId: string) => {
+    window.open(`https://marketplace.trustedvehicles.com/vehicle/${vehicleId}`, '_blank');
+  };
 
   const features = [
     {
@@ -41,29 +79,106 @@ const MarketplaceLanding = () => {
         <link rel="canonical" href="https://trustedvehicles.com/marketplace" />
       </Helmet>
       <section className="section-padding text-center">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto px-4">
           <div className="inline-flex p-4 bg-trust-500 rounded-full mb-6">
             <Car className="h-8 w-8 text-white" />
           </div>
-          <h1 className="text-4xl md:text-5xl font-bold text-automotive-900 dark:text-white mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-automotive-900 dark:text-white mb-4">
             Welcome to the TrustedVehicles Marketplace
           </h1>
-          <p className="text-xl md:text-2xl text-automotive-700 dark:text-automotive-100 max-w-3xl mx-auto mb-8">
+          <p className="text-lg sm:text-xl md:text-2xl text-automotive-700 dark:text-automotive-100 max-w-3xl mx-auto mb-8">
             Your one-stop destination for buying and selling pre-inspected, high-quality used cars.
           </p>
-          <Button 
-            size="lg" 
-            className="btn-primary text-lg px-8 py-4"
-            onClick={() => window.open(externalMarketplaceUrl, '_blank')}
-          >
-            Visit Our Full Marketplace
-            <ArrowRight className="h-5 w-5 ml-2" />
-          </Button>
         </div>
       </section>
 
+      {/* Vehicle Listings */}
       <section className="section-padding bg-white dark:bg-card">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-7xl mx-auto px-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-center text-automotive-900 dark:text-white mb-4">
+            Available Vehicles
+          </h2>
+          <p className="text-center text-automotive-600 dark:text-automotive-200 mb-12">
+            Browse our selection of verified used cars
+          </p>
+
+          {loading ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-trust-500"></div>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6">
+              {vehicles.map((vehicle) => (
+                <Card 
+                  key={vehicle.id} 
+                  className="trust-card overflow-hidden group cursor-pointer hover:shadow-xl transition-all duration-300"
+                  onClick={() => handleVehicleClick(vehicle.id)}
+                >
+                  <div className="relative h-40 sm:h-48 overflow-hidden">
+                    <img
+                      src={`${API_BASE}${vehicle.imageUrl}`}
+                      alt={`${vehicle.make} ${vehicle.model}`}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    {vehicle.verified && (
+                      <Badge className="absolute top-2 right-2 bg-trust-500 text-white text-xs">
+                        Verified
+                      </Badge>
+                    )}
+                  </div>
+                  
+                  <CardContent className="p-3 sm:p-4">
+                    <h3 className="font-bold text-base sm:text-lg text-foreground mb-1 truncate">
+                      {vehicle.make} {vehicle.model}
+                    </h3>
+                    <p className="text-xs text-muted-foreground mb-2 truncate">{vehicle.variant}</p>
+                    
+                    <div className="text-xl sm:text-2xl font-bold text-trust-600 mb-3">
+                      ₹{vehicle.price.toLocaleString('en-IN')}
+                    </div>
+                    
+                    <div className="space-y-2 text-xs sm:text-sm text-muted-foreground">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                          <span>{vehicle.year}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <Gauge className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                          <span>{vehicle.odometer.toLocaleString()} km</span>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <Fuel className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
+                          <span>{vehicle.fuelType}</span>
+                        </div>
+                        <span className="truncate max-w-[80px]">{vehicle.transmission}</span>
+                      </div>
+                      
+                      <div className="flex items-center text-trust-600 pt-2 border-t border-border">
+                        <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-1 flex-shrink-0" />
+                        <span className="truncate">{vehicle.rtoState}</span>
+                      </div>
+                    </div>
+                    
+                    <Button className="w-full mt-3 sm:mt-4 btn-primary text-xs sm:text-sm">
+                      View Details
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Features Section */}
+      <section className="section-padding bg-automotive-50 dark:bg-automotive-900">
+        <div className="max-w-7xl mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-automotive-900 dark:text-white mb-12">
             Why Choose Our Marketplace?
           </h2>
@@ -88,21 +203,13 @@ const MarketplaceLanding = () => {
       </section>
 
       <section className="section-padding trust-gradient text-center">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="text-4xl font-bold text-white mb-6">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-3xl sm:text-4xl font-bold text-white mb-6">
             Ready to Find Your Next Car?
           </h2>
-          <p className="text-xl text-white/90 mb-8">
-            Explore thousands of verified listings and connect with trusted sellers today.
+          <p className="text-lg sm:text-xl text-white/90 mb-8">
+            Connect with trusted sellers and find your perfect vehicle today.
           </p>
-          <Button 
-            size="lg" 
-            className="bg-white text-trust-600 hover:bg-white/90"
-            onClick={() => window.open(externalMarketplaceUrl, '_blank')}
-          >
-            Browse Marketplace Now
-            <ArrowRight className="h-5 w-5 ml-2" />
-          </Button>
         </div>
       </section>
     </div>
