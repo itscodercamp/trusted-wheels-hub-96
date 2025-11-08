@@ -51,7 +51,7 @@ const BookInspection = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev/api/customerinspection', {
+      const response = await fetch('https://apis.trustedvehicles.com/api/customerinspection', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

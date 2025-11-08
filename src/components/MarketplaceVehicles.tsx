@@ -22,7 +22,8 @@ interface Vehicle {
 const MarketplaceVehicles = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState(true);
-  const API_BASE = 'https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev';
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const API_BASE = 'https://apis.trustedvehicles.com';
 
   useEffect(() => {
     const fetchVehicles = async () => {
@@ -39,6 +40,15 @@ const MarketplaceVehicles = () => {
 
     fetchVehicles();
   }, []);
+
+  useEffect(() => {
+    if (vehicles.length > 0) {
+      const interval = setInterval(() => {
+        setCurrentIndex((prevIndex) => (prevIndex + 1) % vehicles.length);
+      }, 6000);
+      return () => clearInterval(interval);
+    }
+  }, [vehicles.length]);
 
   const handleVehicleClick = (vehicleId: string) => {
     window.location.href = `/marketplace-landing?id=${vehicleId}`;
@@ -73,71 +83,77 @@ const MarketplaceVehicles = () => {
           </p>
         </div>
 
-        {/* Vehicle Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {vehicles.slice(0, 8).map((vehicle) => (
-            <Card 
-              key={vehicle.id} 
-              className="trust-card overflow-hidden group cursor-pointer hover:shadow-xl transition-all duration-300"
-              onClick={() => handleVehicleClick(vehicle.id)}
-            >
-              <div className="relative h-40 sm:h-48 overflow-hidden">
-                <img
-                  src={`${API_BASE}${vehicle.imageUrl}`}
-                  alt={`${vehicle.make} ${vehicle.model}`}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-                  loading="lazy"
-                  decoding="async"
-                />
-                {vehicle.verified && (
-                  <Badge className="absolute top-2 right-2 bg-trust-500 text-white text-xs">
-                    Verified
-                  </Badge>
-                )}
+        {/* Vehicle Slider */}
+        <div className="relative overflow-hidden">
+          <div 
+            className="flex transition-transform duration-1000 ease-in-out"
+            style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+          >
+            {vehicles.map((vehicle) => (
+              <div key={vehicle.id} className="min-w-full px-2">
+                <Card 
+                  className="trust-card overflow-hidden group cursor-pointer hover:shadow-xl transition-all duration-300 max-w-md mx-auto"
+                  onClick={() => handleVehicleClick(vehicle.id)}
+                >
+                  <div className="relative h-56 overflow-hidden">
+                    <img
+                      src={`${API_BASE}${vehicle.imageUrl}`}
+                      alt={`${vehicle.make} ${vehicle.model}`}
+                      className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    {vehicle.verified && (
+                      <Badge className="absolute top-2 right-2 bg-trust-500 text-white text-xs">
+                        Verified
+                      </Badge>
+                    )}
+                  </div>
+                  
+                  <CardContent className="p-6">
+                    <h3 className="font-bold text-xl text-foreground mb-1 truncate">
+                      {vehicle.make} {vehicle.model}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mb-2 truncate">{vehicle.variant}</p>
+                    
+                    <div className="text-2xl font-bold text-trust-600 mb-3">
+                      ₹{vehicle.price.toLocaleString('en-IN')}
+                    </div>
+                    
+                    <div className="space-y-2 text-sm text-muted-foreground">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <Calendar className="h-4 w-4 mr-1" />
+                          <span>{vehicle.year}</span>
+                        </div>
+                        <div className="flex items-center">
+                          <Gauge className="h-4 w-4 mr-1" />
+                          <span>{vehicle.odometer.toLocaleString()} km</span>
+                        </div>
+                      </div>
+                      
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center">
+                          <Fuel className="h-4 w-4 mr-1" />
+                          <span>{vehicle.fuelType}</span>
+                        </div>
+                        <span className="truncate max-w-[150px]">{vehicle.transmission}</span>
+                      </div>
+                      
+                      <div className="flex items-center text-trust-600 pt-2 border-t border-border">
+                        <MapPin className="h-4 w-4 mr-1 flex-shrink-0" />
+                        <span className="truncate">{vehicle.rtoState}</span>
+                      </div>
+                    </div>
+                    
+                    <Button className="w-full mt-4 btn-primary">
+                      View Details
+                    </Button>
+                  </CardContent>
+                </Card>
               </div>
-              
-              <CardContent className="p-3 sm:p-4">
-                <h3 className="font-bold text-base sm:text-lg text-foreground mb-1 truncate">
-                  {vehicle.make} {vehicle.model}
-                </h3>
-                <p className="text-xs text-muted-foreground mb-2 truncate">{vehicle.variant}</p>
-                
-                <div className="text-xl sm:text-2xl font-bold text-trust-600 mb-3">
-                  ₹{vehicle.price.toLocaleString('en-IN')}
-                </div>
-                
-                <div className="space-y-2 text-xs sm:text-sm text-muted-foreground">
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <Calendar className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                      <span>{vehicle.year}</span>
-                    </div>
-                    <div className="flex items-center">
-                      <Gauge className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                      <span>{vehicle.odometer.toLocaleString()} km</span>
-                    </div>
-                  </div>
-                  
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center">
-                      <Fuel className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                      <span>{vehicle.fuelType}</span>
-                    </div>
-                    <span className="truncate max-w-[80px]">{vehicle.transmission}</span>
-                  </div>
-                  
-                  <div className="flex items-center text-trust-600 pt-2 border-t border-border">
-                    <MapPin className="h-3 w-3 sm:h-4 sm:w-4 mr-1 flex-shrink-0" />
-                    <span className="truncate">{vehicle.rtoState}</span>
-                  </div>
-                </div>
-                
-                <Button className="w-full mt-3 sm:mt-4 btn-primary text-xs sm:text-sm">
-                  View Details
-                </Button>
-              </CardContent>
-            </Card>
-          ))}
+            ))}
+          </div>
         </div>
 
         <div className="text-center mt-8">

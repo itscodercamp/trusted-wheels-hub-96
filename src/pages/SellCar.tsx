@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Car, Upload, Camera, FileText, DollarSign, Phone } from 'lucide-react';
+import { Car, Camera, FileText, DollarSign, Phone } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -20,6 +20,7 @@ const SellCar = () => {
     kmDriven: '',
     owners: '',
     registrationState: '',
+    serviceType: '',
     city: '',
     sellerName: '',
     phone: '',
@@ -55,7 +56,7 @@ const SellCar = () => {
         }
       });
 
-      const response = await fetch('https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev/api/sell-requests', {
+      const response = await fetch('https://apis.trustedvehicles.com/api/sell-requests', {
         method: 'POST',
         body: formDataToSend,
       });
@@ -77,6 +78,7 @@ const SellCar = () => {
           kmDriven: '',
           owners: '',
           registrationState: '',
+          serviceType: '',
           city: '',
           sellerName: '',
           phone: '',
@@ -257,6 +259,24 @@ const SellCar = () => {
                         onChange={(e) => handleInputChange('registrationState', e.target.value)}
                       />
                     </div>
+
+                    <div>
+                      <Label htmlFor="serviceType">Service Type</Label>
+                      <Select
+                        value={formData.serviceType}
+                        onValueChange={(value) => handleInputChange('serviceType', value)}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select service type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="car_valuation">Car Valuation Only</SelectItem>
+                          <SelectItem value="scrap_car">Scrap Car</SelectItem>
+                          <SelectItem value="exchange_car">Exchange Car</SelectItem>
+                          <SelectItem value="selling_car">Selling Car</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
                 </div>
 
@@ -325,19 +345,6 @@ const SellCar = () => {
                     className="cursor-pointer"
                   />
                   <p className="text-xs text-muted-foreground mt-1">Required for verification</p>
-                </div>
-
-                {/* Photo Upload */}
-                <div>
-                  <Label>Upload Car Photos (Optional)</Label>
-                  <div className="border-2 border-dashed border-muted-foreground/25 rounded-lg p-8 text-center">
-                    <Upload className="h-12 w-12 mx-auto mb-4 text-muted-foreground" />
-                    <p className="text-muted-foreground mb-2">Drag & drop photos or click to upload</p>
-                    <p className="text-sm text-muted-foreground">Upload up to 10 photos (JPG, PNG)</p>
-                    <Button type="button" variant="outline" className="mt-4">
-                      Choose Photos
-                    </Button>
-                  </div>
                 </div>
 
                 <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>

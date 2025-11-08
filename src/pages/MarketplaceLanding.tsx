@@ -23,7 +23,7 @@ interface Vehicle {
 const MarketplaceLanding = () => {
   const [vehicles, setVehicles] = useState<Vehicle[]>([]);
   const [loading, setLoading] = useState(true);
-  const API_BASE = 'https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev';
+  const API_BASE = 'https://apis.trustedvehicles.com';
 
   useEffect(() => {
     const fetchVehicles = async () => {

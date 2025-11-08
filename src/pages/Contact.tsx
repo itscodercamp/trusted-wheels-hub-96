@@ -33,7 +33,7 @@ const Contact = () => {
     
     try {
       // Updated API URL (removed trailing slash as per provided code)
-      const response = await fetch('https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev/api/contact', {
+      const response = await fetch('https://apis.trustedvehicles.com/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
