@@ -1,23 +1,39 @@
-import { Search, MapPin, Filter, Car, DollarSign, FileText, Zap, CreditCard, User, Shield, History } from 'lucide-react';
+import { useState } from 'react';
+import { MapPin, Car, DollarSign, FileText, Zap, CreditCard, Shield, History, TrendingUp, Wallet, DollarSignIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge'; // Import Badge component
 import { useLocation } from '@/hooks/useLocation';
 import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
   const navigate = useNavigate();
   const { requestLocation, latitude, longitude, error, loading } = useLocation();
+  const [expandedInspection, setExpandedInspection] = useState(false);
 
-  const services = [
-    { icon: Car, label: 'Buy Used Car', active: true, path: '/buy-used-car', scrollTo: 'marketplace' },
-    { icon: DollarSign, label: 'Sell Car', active: false, path: '/sell-car' },
-    { icon: FileText, label: 'IMS', active: false, path: 'https://ims.trustedvehicles.com' },
-    { icon: Zap, label: 'Dealer Marketplace', active: false, path: '/marketplace-landing' },
+  const mainServices = [
+    { icon: Car, label: 'Buy Used Car', path: '/buy-used-car', scrollTo: 'marketplace', gradient: 'from-blue-500 to-blue-600' },
+    { icon: DollarSign, label: 'Sell Car', path: '/sell-car', gradient: 'from-green-500 to-green-600' },
+    { icon: FileText, label: 'IMS Dealer', path: 'https://ims.trustedvehicles.com', gradient: 'from-purple-500 to-purple-600' },
+    { icon: Zap, label: 'Marketplace', path: '/marketplace-landing', gradient: 'from-orange-500 to-orange-600' },
+    { icon: CreditCard, label: 'Loan', path: '/car-loan', gradient: 'from-indigo-500 to-indigo-600' },
+    { icon: Shield, label: 'Insurance', path: '/insurance', gradient: 'from-red-500 to-red-600' },
+    { icon: History, label: 'Inspection', path: null, gradient: 'from-teal-500 to-teal-600', expandable: true },
+    { icon: TrendingUp, label: 'Premium Cars', path: '/buy-used-car?category=premium', gradient: 'from-yellow-500 to-yellow-600' },
+    { icon: Wallet, label: 'Low Budget Cars', path: '/buy-used-car?category=budget', gradient: 'from-cyan-500 to-cyan-600' },
+    { icon: DollarSignIcon, label: 'Mid Range Cars', path: '/buy-used-car?category=midrange', gradient: 'from-pink-500 to-pink-600' },
   ];
 
-  const handleServiceClick = (service: typeof services[0]) => {
+  const inspectionServices = [
+    { icon: FileText, label: 'Book Inspection', path: '/book-inspection', gradient: 'from-teal-400 to-teal-500' },
+    { icon: Shield, label: 'PDI Inspection', path: '/book-inspection?type=pdi', gradient: 'from-teal-500 to-teal-600' },
+    { icon: History, label: 'Vehicle History', path: '/vehicle-history', gradient: 'from-teal-600 to-teal-700' },
+  ];
+
+  const handleServiceClick = (service: typeof mainServices[0]) => {
+    if (service.expandable) {
+      setExpandedInspection(!expandedInspection);
+      return;
+    }
     if (service.scrollTo === 'marketplace') {
       const element = document.getElementById('marketplace-section');
       if (element) {
@@ -25,33 +41,33 @@ const HeroSection = () => {
       }
       return;
     }
-    if (service.path.startsWith('http')) {
+    if (service.path?.startsWith('http')) {
       window.open(service.path, '_blank');
-    } else {
+    } else if (service.path) {
       navigate(service.path);
     }
   };
 
 
   return (
-    <section className="relative bg-gradient-to-br from-gray-50 to-white dark:from-background dark:to-card min-h-screen lg:min-h-[80vh]">
-      {/* Background Image for All Devices */}
-      <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-gradient-to-r from-white/80 to-white/50 dark:from-background/80 dark:to-background/50 z-10"></div>
-        <img 
-          src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1920&h=1080&fit=crop" 
-          alt="Car background"
-          decoding="async"
-          fetchPriority="high"
-          className="w-full h-full object-cover"
-        />
-      </div>
+    <section className="relative bg-gradient-to-br from-gray-50 to-white dark:from-background dark:to-card">
+      {/* Hero Content */}
+      <div className="relative min-h-[60vh] lg:min-h-[70vh]">
+        {/* Background Image */}
+        <div className="absolute inset-0">
+          <div className="absolute inset-0 bg-gradient-to-r from-white/80 to-white/50 dark:from-background/80 dark:to-background/50 z-10"></div>
+          <img 
+            src="https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1920&h=1080&fit=crop" 
+            alt="Car background"
+            decoding="async"
+            fetchPriority="high"
+            className="w-full h-full object-cover"
+          />
+        </div>
 
-      <div className="relative z-20">
-        {/* Mobile Hero */}
-        <div className="lg:hidden">
-          {/* Welcome Header */}
-          <div className="px-4 pt-6 pb-4">
+        <div className="relative z-20">
+          {/* Mobile Hero */}
+          <div className="lg:hidden px-4 pt-6 pb-32">
             <div className="flex items-center justify-between mb-4">
               <div>
                 <p className="text-sm text-muted-foreground">Welcome to</p>
@@ -72,89 +88,66 @@ const HeroSection = () => {
               </div>
             </div>
 
-            <div className="space-y-1 mb-6">
+            <div className="space-y-1">
               <h2 className="text-2xl font-bold text-foreground">better drives,</h2>
               <h2 className="text-2xl font-bold text-foreground">better lives</h2>
             </div>
+          </div>
 
-            {/* Services Grid */}
-            <div className="grid grid-cols-2 gap-3 mb-6">
-              {services.map((service, index) => (
-                <Card 
-                  key={index} 
-                  className={`relative overflow-hidden transition-all duration-300 transform hover:scale-105 hover:shadow-2xl backdrop-blur-sm bg-white/20 dark:bg-background/20 border-white/30 shadow-lg ${service.active ? 'bg-primary/10 border-primary/30' : ''} cursor-pointer`}
-                  onClick={() => handleServiceClick(service)}
-                  style={{
-                    boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
-                    backdropFilter: 'blur(8px)',
-                    WebkitBackdropFilter: 'blur(8px)',
-                    border: '1px solid rgba(255, 255, 255, 0.18)'
-                  }}
+          {/* Desktop Hero */}
+          <div className="hidden lg:block max-w-7xl mx-auto px-8 py-16 pb-32">
+            <div className="max-w-2xl">
+              <p className="text-lg text-muted-foreground mb-2">Welcome to TrustedVehicles</p>
+              <h1 className="text-5xl xl:text-6xl font-bold text-foreground leading-tight">
+                better drives,<br />
+                better lives
+              </h1>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Service Cards Section - Positioned at bottom */}
+      <div className="relative -mt-24 z-30 pb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
+            {mainServices.map((service, index) => (
+              <Card
+                key={index}
+                className="group relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl border-none"
+                onClick={() => handleServiceClick(service)}
+              >
+                <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-90 group-hover:opacity-100 transition-opacity`}></div>
+                <CardContent className="relative p-6 text-center">
+                  <service.icon className="w-10 h-10 mx-auto mb-3 text-white drop-shadow-lg" />
+                  <p className="text-sm font-semibold text-white drop-shadow-md">
+                    {service.label}
+                  </p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* Expanded Inspection Services */}
+          {expandedInspection && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4 animate-in fade-in slide-in-from-top-4 duration-300">
+              {inspectionServices.map((service, index) => (
+                <Card
+                  key={index}
+                  className="group relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-xl border-none"
+                  onClick={() => service.path && navigate(service.path)}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
-                  <CardContent className="relative p-4 text-center">
-                    <service.icon className={`w-8 h-8 mx-auto mb-2 drop-shadow-sm ${service.active ? 'text-primary' : 'text-foreground'}`} />
-                    <p className={`text-sm font-medium drop-shadow-sm ${service.active ? 'text-primary' : 'text-foreground'}`}>
+                  <div className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-90 group-hover:opacity-100 transition-opacity`}></div>
+                  <CardContent className="relative p-8 text-center">
+                    <service.icon className="w-12 h-12 mx-auto mb-4 text-white drop-shadow-lg" />
+                    <p className="text-base font-semibold text-white drop-shadow-md">
                       {service.label}
                     </p>
                   </CardContent>
                 </Card>
               ))}
             </div>
-          </div>
-          {/* Removed the inspection and sell cards from here for mobile view */}
-        </div>
-
-        {/* Desktop Hero */}
-        <div className="hidden lg:block max-w-7xl mx-auto px-8 py-16">
-          <div className="grid grid-cols-2 gap-12 items-center min-h-[60vh]">
-            <div className="space-y-8">
-              <div>
-                <p className="text-lg text-muted-foreground mb-2">Welcome to TrustedVehicles</p>
-                <h1 className="text-5xl xl:text-6xl font-bold text-foreground leading-tight">
-                  better drives,<br />
-                  better lives
-                </h1>
-              </div>
-
-              <Card 
-                className="relative overflow-hidden max-w-2xl backdrop-blur-sm bg-white/20 dark:bg-background/20 border-white/30 shadow-2xl"
-                style={{
-                  boxShadow: '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
-                  backdropFilter: 'blur(12px)',
-                  WebkitBackdropFilter: 'blur(12px)',
-                  border: '1px solid rgba(255, 255, 255, 0.18)'
-                }}
-              >
-                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none"></div>
-                <CardContent className="relative p-6">
-                  {/* Services */}
-                  <div className="grid grid-cols-2 gap-4 mb-8">
-                    {services.map((service, index) => (
-                      <div 
-                        key={index} 
-                        className={`relative overflow-hidden flex flex-col items-center p-4 rounded-xl transition-all duration-300 transform hover:scale-105 backdrop-blur-sm bg-white/10 dark:bg-background/10 border-white/20 shadow-lg hover:shadow-xl ${
-                          service.active ? 'bg-primary/20 border-primary/30' : ''
-                        } cursor-pointer`}
-                        onClick={() => handleServiceClick(service)}
-                        style={{
-                          boxShadow: '0 4px 20px 0 rgba(31, 38, 135, 0.2)',
-                          backdropFilter: 'blur(6px)',
-                          WebkitBackdropFilter: 'blur(6px)',
-                          border: '1px solid rgba(255, 255, 255, 0.15)'
-                        }}
-                      >
-                        <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent pointer-events-none"></div>
-                        <service.icon className={`w-10 h-10 mb-3 drop-shadow-sm ${service.active ? 'text-primary' : 'text-foreground'}`} />
-                        <span className="text-base font-medium text-center drop-shadow-sm">{service.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                  {/* Removed the inspection and sell cards from here for desktop view */}
-                </CardContent>
-              </Card>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </section>
