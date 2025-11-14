@@ -8,19 +8,19 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';
 import { Helmet } from 'react-helmet-async';
+import { useToast } from '@/hooks/use-toast';
 
 const Insurance = () => {
+  const { toast } = useToast();
   const [insuranceData, setInsuranceData] = useState({
-    vehicleType: '',
-    carMake: '',
-    carModel: '',
-    registrationYear: '',
-    fuelType: '',
-    city: '',
-    previousPolicy: ''
+    name: '',
+    phone: '',
+    registrationNumber: '',
+    insuranceType: ''
   });
 
   const [showQuote, setShowQuote] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const insuranceFeatures = [
     {
@@ -62,8 +62,50 @@ const Insurance = () => {
     }
   ];
 
-  const handleQuoteGeneration = () => {
-    setShowQuote(true);
+  const handleQuoteGeneration = async () => {
+    if (!insuranceData.name || !insuranceData.phone || !insuranceData.registrationNumber || !insuranceData.insuranceType) {
+      toast({
+        title: "Error",
+        description: "Please fill all required fields",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev/api/insurance-renewals', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(insuranceData)
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Success",
+          description: "Insurance renewal request submitted successfully!"
+        });
+        setShowQuote(true);
+        setInsuranceData({
+          name: '',
+          phone: '',
+          registrationNumber: '',
+          insuranceType: ''
+        });
+      } else {
+        throw new Error('Failed to submit');
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit insurance request. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -113,101 +155,54 @@ const Insurance = () => {
                 </CardHeader>
                 <CardContent className="space-y-6">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div>
-                      <Label htmlFor="vehicleType">Vehicle Type</Label>
-                      <Select onValueChange={(value) => setInsuranceData(prev => ({ ...prev, vehicleType: value }))}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="car">Car</SelectItem>
-                          <SelectItem value="two-wheeler">Two Wheeler</SelectItem>
-                          <SelectItem value="commercial">Commercial Vehicle</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="carMake">Car Make</Label>
-                      <Select onValueChange={(value) => setInsuranceData(prev => ({ ...prev, carMake: value }))}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Make" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="maruti">Maruti Suzuki</SelectItem>
-                          <SelectItem value="hyundai">Hyundai</SelectItem>
-                          <SelectItem value="tata">Tata</SelectItem>
-                          <SelectItem value="honda">Honda</SelectItem>
-                          <SelectItem value="mahindra">Mahindra</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="carModel">Car Model</Label>
+                    <div className="md:col-span-2">
+                      <Label htmlFor="name">Full Name *</Label>
                       <Input 
-                        placeholder="Enter model"
-                        value={insuranceData.carModel}
-                        onChange={(e) => setInsuranceData(prev => ({ ...prev, carModel: e.target.value }))}
+                        placeholder="Enter your full name"
+                        value={insuranceData.name}
+                        onChange={(e) => setInsuranceData(prev => ({ ...prev, name: e.target.value }))}
+                        required
                       />
                     </div>
 
                     <div>
-                      <Label htmlFor="registrationYear">Registration Year</Label>
-                      <Select onValueChange={(value) => setInsuranceData(prev => ({ ...prev, registrationYear: value }))}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Year" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          {Array.from({ length: 25 }, (_, i) => 2024 - i).map(year => (
-                            <SelectItem key={year} value={year.toString()}>{year}</SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="fuelType">Fuel Type</Label>
-                      <Select onValueChange={(value) => setInsuranceData(prev => ({ ...prev, fuelType: value }))}>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Select Fuel" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="petrol">Petrol</SelectItem>
-                          <SelectItem value="diesel">Diesel</SelectItem>
-                          <SelectItem value="cng">CNG</SelectItem>
-                          <SelectItem value="electric">Electric</SelectItem>
-                        </SelectContent>
-                      </Select>
-                    </div>
-
-                    <div>
-                      <Label htmlFor="city">City</Label>
+                      <Label htmlFor="phone">Phone Number *</Label>
                       <Input 
-                        placeholder="Enter city"
-                        value={insuranceData.city}
-                        onChange={(e) => setInsuranceData(prev => ({ ...prev, city: e.target.value }))}
+                        placeholder="Enter phone number"
+                        value={insuranceData.phone}
+                        onChange={(e) => setInsuranceData(prev => ({ ...prev, phone: e.target.value }))}
+                        required
+                      />
+                    </div>
+
+                    <div>
+                      <Label htmlFor="registrationNumber">Registration Number *</Label>
+                      <Input 
+                        placeholder="e.g., MH12XY1234"
+                        value={insuranceData.registrationNumber}
+                        onChange={(e) => setInsuranceData(prev => ({ ...prev, registrationNumber: e.target.value }))}
+                        required
                       />
                     </div>
 
                     <div className="md:col-span-2">
-                      <Label htmlFor="previousPolicy">Previous Policy</Label>
-                      <Select onValueChange={(value) => setInsuranceData(prev => ({ ...prev, previousPolicy: value }))}>
+                      <Label htmlFor="insuranceType">Insurance Type *</Label>
+                      <Select value={insuranceData.insuranceType} onValueChange={(value) => setInsuranceData(prev => ({ ...prev, insuranceType: value }))}>
                         <SelectTrigger>
-                          <SelectValue placeholder="Do you have existing policy?" />
+                          <SelectValue placeholder="Select insurance type" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="yes">Yes, I have existing policy</SelectItem>
-                          <SelectItem value="no">No, new insurance</SelectItem>
-                          <SelectItem value="expired">Expired policy</SelectItem>
+                          <SelectItem value="Comprehensive">Comprehensive</SelectItem>
+                          <SelectItem value="Third Party">Third Party</SelectItem>
+                          <SelectItem value="Zero Depreciation">Zero Depreciation</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
                   </div>
 
-                  <Button onClick={handleQuoteGeneration} size="lg" className="w-full">
+                  <Button onClick={handleQuoteGeneration} size="lg" className="w-full" disabled={isSubmitting}>
                     <Calculator className="h-5 w-5 mr-2" />
-                    Get Free Quote
+                    {isSubmitting ? 'Submitting...' : 'Submit Insurance Request'}
                   </Button>
 
                   {showQuote && (
