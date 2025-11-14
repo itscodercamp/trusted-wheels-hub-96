@@ -18,15 +18,14 @@ const HeroSection = () => {
     { icon: CreditCard, label: 'Loan', path: '/car-loan', gradient: 'from-indigo-500 to-indigo-600' },
     { icon: Shield, label: 'Insurance', path: '/insurance', gradient: 'from-red-500 to-red-600' },
     { icon: History, label: 'Inspection', path: null, gradient: 'from-teal-500 to-teal-600', expandable: true },
-    { icon: TrendingUp, label: 'Premium Cars', path: '/buy-used-car?category=premium', gradient: 'from-yellow-500 to-yellow-600' },
-    { icon: Wallet, label: 'Low Budget Cars', path: '/buy-used-car?category=budget', gradient: 'from-cyan-500 to-cyan-600' },
-    { icon: DollarSignIcon, label: 'Mid Range Cars', path: '/buy-used-car?category=midrange', gradient: 'from-pink-500 to-pink-600' },
+    { icon: TrendingUp, label: 'Premium Cars', path: 'https://marketplace.trustedvehicles.com', gradient: 'from-yellow-500 to-yellow-600' },
+    { icon: Wallet, label: 'Low Budget Cars', path: 'https://marketplace.trustedvehicles.com', gradient: 'from-cyan-500 to-cyan-600' },
+    { icon: DollarSignIcon, label: 'Mid Range Cars', path: 'https://marketplace.trustedvehicles.com', gradient: 'from-pink-500 to-pink-600' },
   ];
 
   const inspectionServices = [
     { icon: FileText, label: 'Book Inspection', path: '/book-inspection', gradient: 'from-teal-400 to-teal-500' },
     { icon: Shield, label: 'PDI Inspection', path: '/book-inspection?type=pdi', gradient: 'from-teal-500 to-teal-600' },
-    { icon: History, label: 'Vehicle History', path: '/vehicle-history', gradient: 'from-teal-600 to-teal-700' },
   ];
 
   const handleServiceClick = (service: typeof mainServices[0]) => {

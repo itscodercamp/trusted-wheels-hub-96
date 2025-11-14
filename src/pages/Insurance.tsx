@@ -268,7 +268,15 @@ const Insurance = () => {
                       ))}
                     </ul>
                     
-                    <Button className={`w-full ${plan.popular ? '' : 'variant-outline'}`}>
+                    <Button 
+                      className={`w-full ${plan.popular ? '' : 'variant-outline'}`}
+                      onClick={() => {
+                        setInsuranceData(prev => ({ ...prev, insuranceType: plan.type }));
+                        const tabsList = document.querySelector('[role="tablist"]');
+                        const quoteTab = tabsList?.querySelector('[value="quote"]') as HTMLElement;
+                        quoteTab?.click();
+                      }}
+                    >
                       Choose Plan
                     </Button>
                   </CardContent>
