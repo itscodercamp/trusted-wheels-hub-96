@@ -1,26 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { ArrowLeft, ArrowRight, CheckCircle, Car, MapPin, FileText, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'; // Import Select components
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from '@/hooks/use-toast';
 import { Helmet } from 'react-helmet-async';
+import { useSearchParams } from 'react-router-dom';
 
 const BookInspection = () => {
+  const [searchParams] = useSearchParams();
+  const isPDI = searchParams.get('type') === 'pdi';
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState({
-    fullName: '',
-    phoneNumber: '',
-    carMake: '',
-    carModel: '',
+    name: '',
+    phone: '',
+    email: '',
+    city: '',
+    make: '',
+    model: '',
+    // Regular inspection fields
     carYear: '',
     inspectionType: '',
     registrationNumber: '',
-    plateNumber: '', // Re-introduced as per provided code
+    plateNumber: '',
     street: '',
-    city: '',
     state: '',
     pinCode: ''
   });
@@ -31,12 +36,12 @@ const BookInspection = () => {
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
       ...prev,
-      [field]: field === 'registrationNumber' ? value.toUpperCase() : value // Keep uppercase for registration number
+      [field]: field === 'registrationNumber' ? value.toUpperCase() : value
     }));
   };
 
   const handleNext = () => {
-    if (currentStep < 5) {
+    if (currentStep < (isPDI ? 2 : 5)) {
       setCurrentStep(currentStep + 1);
     }
   };
@@ -51,27 +56,38 @@ const BookInspection = () => {
     setIsSubmitting(true);
     
     try {
-      const response = await fetch('https://apis.trustedvehicles.com/api/customerinspection', {
+      const apiUrl = isPDI 
+        ? 'https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev/api/pdi-inspections'
+        : 'https://apis.trustedvehicles.com/api/customerinspection';
+      
+      const payload = isPDI ? {
+        name: formData.name,
+        phone: formData.phone,
+        email: formData.email,
+        city: formData.city,
+        make: formData.make,
+        model: formData.model
+      } : {
+        fullName: formData.name,
+        phoneNumber: formData.phone,
+        carMake: formData.make,
+        carModel: formData.model,
+        carYear: formData.carYear,
+        inspectionType: formData.inspectionType,
+        registrationNumber: formData.registrationNumber,
+        plateNumber: formData.plateNumber,
+        street: formData.street,
+        city: formData.city,
+        state: formData.state,
+        pinCode: formData.pinCode
+      };
+
+      const response = await fetch(apiUrl, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          fullName: formData.fullName,
-          phoneNumber: formData.phoneNumber,
-          carMake: formData.carMake,
-          carModel: formData.carModel,
-          carYear: formData.carYear,
-          inspectionType: formData.inspectionType,
-          registrationNumber: formData.registrationNumber,
-          // plateNumber is included in formData but not explicitly mapped in the provided body,
-          // I'll include it here for completeness if the backend expects it.
-          plateNumber: formData.plateNumber, 
-          street: formData.street,
-          city: formData.city,
-          state: formData.state,
-          pinCode: formData.pinCode
-        }),
+        body: JSON.stringify(payload)
       });
 
       if (response.ok) {
@@ -82,26 +98,26 @@ const BookInspection = () => {
         
         // Reset form
         setFormData({
-          fullName: '',
-          phoneNumber: '',
-          carMake: '',
-          carModel: '',
+          name: '',
+          phone: '',
+          email: '',
+          city: '',
+          make: '',
+          model: '',
           carYear: '',
           inspectionType: '',
           registrationNumber: '',
           plateNumber: '',
           street: '',
-          city: '',
           state: '',
           pinCode: ''
         });
-        setCurrentStep(5);
+        setCurrentStep(isPDI ? 2 : 5);
       } else {
-        // Attempt to parse error message from response if available
         const errorData = await response.json().catch(() => ({ message: 'Unknown error' }));
         throw new Error(errorData.message || 'Failed to book inspection');
       }
-    } catch (error: any) { // Explicitly type error as any for message property
+    } catch (error: any) {
       console.error('Error booking inspection:', error);
       toast({
         title: "Error Booking Inspection",
@@ -122,13 +138,19 @@ const BookInspection = () => {
   ];
 
   const isStepValid = () => {
+    if (isPDI) {
+      return currentStep === 1 ? 
+        formData.name && formData.phone && formData.email && formData.city && formData.make && formData.model :
+        true;
+    }
+    
     switch (currentStep) {
       case 1:
-        return formData.fullName && formData.phoneNumber;
+        return formData.name && formData.phone;
       case 2:
-        return formData.carMake && formData.carModel && formData.carYear && formData.inspectionType;
+        return formData.make && formData.model && formData.carYear && formData.inspectionType;
       case 3:
-        return formData.registrationNumber && formData.plateNumber; // Validation for plateNumber re-introduced
+        return formData.registrationNumber && formData.plateNumber;
       case 4:
         return formData.street && formData.city && formData.state && formData.pinCode;
       default:
@@ -197,48 +219,117 @@ const BookInspection = () => {
             <CardContent className="space-y-6">
               {currentStep === 1 && (
                 <div className="space-y-4">
-                  <div>
-                    <Label htmlFor="fullName">Full Name *</Label>
-                    <Input
-                      id="fullName"
-                      value={formData.fullName}
-                      onChange={(e) => handleInputChange('fullName', e.target.value)}
-                      placeholder="Enter your full name"
-                      className="mt-1"
-                    />
-                  </div>
-                  <div>
-                    <Label htmlFor="phoneNumber">Phone Number *</Label>
-                    <Input
-                      id="phoneNumber"
-                      type="tel"
-                      value={formData.phoneNumber}
-                      onChange={(e) => handleInputChange('phoneNumber', e.target.value)}
-                      placeholder="Enter your phone number"
-                      className="mt-1"
-                    />
-                  </div>
+                  {isPDI ? (
+                    <>
+                      <div>
+                        <Label htmlFor="name">Full Name *</Label>
+                        <Input
+                          id="name"
+                          value={formData.name}
+                          onChange={(e) => handleInputChange('name', e.target.value)}
+                          placeholder="Enter your full name"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="phone">Phone Number *</Label>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          value={formData.phone}
+                          onChange={(e) => handleInputChange('phone', e.target.value)}
+                          placeholder="Enter your phone number"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="email">Email *</Label>
+                        <Input
+                          id="email"
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => handleInputChange('email', e.target.value)}
+                          placeholder="Enter your email"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="city">City *</Label>
+                        <Input
+                          id="city"
+                          value={formData.city}
+                          onChange={(e) => handleInputChange('city', e.target.value)}
+                          placeholder="Enter your city"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="make">Car Make *</Label>
+                        <Input
+                          id="make"
+                          value={formData.make}
+                          onChange={(e) => handleInputChange('make', e.target.value)}
+                          placeholder="e.g., Maruti"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="model">Car Model *</Label>
+                        <Input
+                          id="model"
+                          value={formData.model}
+                          onChange={(e) => handleInputChange('model', e.target.value)}
+                          placeholder="e.g., Swift"
+                          className="mt-1"
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      <div>
+                        <Label htmlFor="name">Full Name *</Label>
+                        <Input
+                          id="name"
+                          value={formData.name}
+                          onChange={(e) => handleInputChange('name', e.target.value)}
+                          placeholder="Enter your full name"
+                          className="mt-1"
+                        />
+                      </div>
+                      <div>
+                        <Label htmlFor="phone">Phone Number *</Label>
+                        <Input
+                          id="phone"
+                          type="tel"
+                          value={formData.phone}
+                          onChange={(e) => handleInputChange('phone', e.target.value)}
+                          placeholder="Enter your phone number"
+                          className="mt-1"
+                        />
+                      </div>
+                    </>
+                  )}
                 </div>
               )}
 
-              {currentStep === 2 && (
+              {currentStep === 2 && !isPDI && (
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="carMake">Car Make *</Label>
+                    <Label htmlFor="make">Car Make *</Label>
                     <Input
-                      id="carMake"
-                      value={formData.carMake}
-                      onChange={(e) => handleInputChange('carMake', e.target.value)}
+                      id="make"
+                      value={formData.make}
+                      onChange={(e) => handleInputChange('make', e.target.value)}
                       placeholder="e.g., Honda, Maruti, Hyundai"
                       className="mt-1"
                     />
                   </div>
                   <div>
-                    <Label htmlFor="carModel">Car Model *</Label>
+                    <Label htmlFor="model">Car Model *</Label>
                     <Input
-                      id="carModel"
-                      value={formData.carModel}
-                      onChange={(e) => handleInputChange('carModel', e.target.value)}
+                      id="model"
+                      value={formData.model}
+                      onChange={(e) => handleInputChange('model', e.target.value)}
                       placeholder="e.g., City, Swift, Creta"
                       className="mt-1"
                     />

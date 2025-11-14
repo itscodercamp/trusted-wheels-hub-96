@@ -11,13 +11,13 @@ const Team = () => {
       bio: "Visionary leader with passion for transforming the automotive industry in India.",
     },
     {
-      name: "Mohsin Raza",
+      name: "Sumayla Ali",
       role: "Co-Founder",
       image: "/placeholder.svg",
       bio: "Strategic thinker focused on building scalable operations and market expansion.",
     },
     {
-      name: "Shakib Khan",
+      name: "MD Shakib",
       role: "Co-Founder",
       image: "/placeholder.svg",
       bio: "Automotive expert with deep industry knowledge and dealer network expertise.",

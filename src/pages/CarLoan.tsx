@@ -4,30 +4,71 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Slider } from '@/components/ui/slider';
 import { Helmet } from 'react-helmet-async';
+import { useToast } from '@/hooks/use-toast';
 
 const CarLoan = () => {
   const [loanData, setLoanData] = useState({
-    carPrice: [1000000],
-    downPayment: [200000],
-    loanTenure: [5],
-    annualIncome: '',
-    employmentType: '',
-    creditScore: ''
+    name: '',
+    phone: '',
+    email: '',
+    make: '',
+    model: '',
+    variant: '',
+    panNumber: '',
+    aadharNumber: ''
   });
 
-  const [showEMI, setShowEMI] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
-  const calculateEMI = () => {
-    const principal = loanData.carPrice[0] - loanData.downPayment[0];
-    const rate = 8.5 / 12 / 100; // 8.5% annual rate
-    const tenure = loanData.loanTenure[0] * 12;
-    
-    const emi = (principal * rate * Math.pow(1 + rate, tenure)) / (Math.pow(1 + rate, tenure) - 1);
-    setShowEMI(true);
-    return Math.round(emi);
+  const handleLoanRequest = async () => {
+    if (!loanData.name || !loanData.phone || !loanData.email || !loanData.make || !loanData.model || !loanData.panNumber || !loanData.aadharNumber) {
+      toast({
+        title: "Error",
+        description: "Please fill all required fields",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('https://9000-firebase-studio-1757611792048.cluster-ancjwrkgr5dvux4qug5rbzyc2y.cloudworkstations.dev/api/loan-requests', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(loanData)
+      });
+
+      if (response.ok) {
+        toast({
+          title: "Success",
+          description: "Loan request submitted successfully! Our team will contact you soon."
+        });
+        setLoanData({
+          name: '',
+          phone: '',
+          email: '',
+          make: '',
+          model: '',
+          variant: '',
+          panNumber: '',
+          aadharNumber: ''
+        });
+      } else {
+        throw new Error('Failed to submit');
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit loan request. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const loanFeatures = [
@@ -85,111 +126,6 @@ const CarLoan = () => {
 
       <div className="max-w-6xl mx-auto px-4 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* EMI Calculator */}
-          <Card className="shadow-xl">
-            <CardHeader>
-              <CardTitle className="text-2xl flex items-center">
-                <Calculator className="h-6 w-6 mr-2" />
-                Car Loan EMI Calculator
-              </CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div>
-                <Label>Car Price: ₹{loanData.carPrice[0].toLocaleString()}</Label>
-                <Slider
-                  value={loanData.carPrice}
-                  onValueChange={(value) => setLoanData(prev => ({ ...prev, carPrice: value }))}
-                  max={5000000}
-                  min={200000}
-                  step={50000}
-                  className="mt-2"
-                />
-                <div className="flex justify-between text-sm text-muted-foreground mt-1">
-                  <span>₹2L</span>
-                  <span>₹50L</span>
-                </div>
-              </div>
-
-              <div>
-                <Label>Down Payment: ₹{loanData.downPayment[0].toLocaleString()}</Label>
-                <Slider
-                  value={loanData.downPayment}
-                  onValueChange={(value) => setLoanData(prev => ({ ...prev, downPayment: value }))}
-                  max={Math.floor(loanData.carPrice[0] * 0.5)}
-                  min={Math.floor(loanData.carPrice[0] * 0.1)}
-                  step={10000}
-                  className="mt-2"
-                />
-                <div className="flex justify-between text-sm text-muted-foreground mt-1">
-                  <span>10%</span>
-                  <span>50%</span>
-                </div>
-              </div>
-
-              <div>
-                <Label>Loan Tenure: {loanData.loanTenure[0]} years</Label>
-                <Slider
-                  value={loanData.loanTenure}
-                  onValueChange={(value) => setLoanData(prev => ({ ...prev, loanTenure: value }))}
-                  max={7}
-                  min={1}
-                  step={1}
-                  className="mt-2"
-                />
-                <div className="flex justify-between text-sm text-muted-foreground mt-1">
-                  <span>1 year</span>
-                  <span>7 years</span>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <Label htmlFor="income">Annual Income</Label>
-                  <Input 
-                    placeholder="Enter annual income"
-                    value={loanData.annualIncome}
-                    onChange={(e) => setLoanData(prev => ({ ...prev, annualIncome: e.target.value }))}
-                  />
-                </div>
-
-                <div>
-                  <Label htmlFor="employment">Employment Type</Label>
-                  <Select onValueChange={(value) => setLoanData(prev => ({ ...prev, employmentType: value }))}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select Type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="salaried">Salaried</SelectItem>
-                      <SelectItem value="self-employed">Self Employed</SelectItem>
-                      <SelectItem value="business">Business Owner</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-
-              <Button onClick={calculateEMI} size="lg" className="w-full">
-                <Calculator className="h-5 w-5 mr-2" />
-                Calculate EMI
-              </Button>
-
-              {showEMI && (
-                <div className="bg-primary/5 p-6 rounded-lg text-center">
-                  <h3 className="text-2xl font-bold text-primary mb-2">₹{calculateEMI().toLocaleString()}</h3>
-                  <p className="text-muted-foreground">Monthly EMI</p>
-                  <div className="grid grid-cols-2 gap-4 mt-4 text-sm">
-                    <div>
-                      <p className="text-muted-foreground">Loan Amount</p>
-                      <p className="font-semibold">₹{(loanData.carPrice[0] - loanData.downPayment[0]).toLocaleString()}</p>
-                    </div>
-                    <div>
-                      <p className="text-muted-foreground">Total Interest</p>
-                      <p className="font-semibold">₹{((calculateEMI() * loanData.loanTenure[0] * 12) - (loanData.carPrice[0] - loanData.downPayment[0])).toLocaleString()}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
-            </CardContent>
-          </Card>
 
           {/* Loan Features & Application */}
           <div className="space-y-6">
